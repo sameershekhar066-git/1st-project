@@ -1,0 +1,791 @@
+---
+// index.astro - Precision Screen Ruler Main App (ไม้บรรทัด.com)
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import RulerCanvas from '../components/RulerCanvas.astro';
+import ObjectSizer from '../components/ObjectSizer.astro';
+import CrosshairHUD from '../components/CrosshairHUD.astro';
+import CalibrationModal from '../components/CalibrationModal.astro';
+import HowToModal from '../components/HowToModal.astro';
+import SeoContent from '../components/SeoContent.astro';
+---
+
+<Layout 
+  title="ไม้บรรทัด — ไม้บรรทัดออนไลน์ ขนาดจริง วัดไม้บรรทัดออนไลน์ ซม. mm นิ้ว ฟรี | ไม้บรรทัด.com"
+  description="ไม้บรรทัด.com เครื่องมือ ไม้บรรทัดออนไลน์ ขนาดจริง 100% ใช้งานฟรี วัดไม้บรรทัดออนไลน์บนหน้าจอมือถือและคอมพิวเตอร์ รองรับ ไม้บรรทัดออนไลน์ เซนติเมตร (ซม.), ไม้บรรทัดออนไลน์ มิลลิเมตร (mm), ไม้บรรทัดออนไลน์ นิ้ว (in) และพิกเซล (px)"
+>
+  
+  <!-- Fixed Navbar (Responsive Desktop & Mobile) -->
+  <Navbar />
+
+  <!-- Main Measurement Workspace Surface (Clean, unobstructed canvas dynamically offset below navbar) -->
+  <main id="ruler-workspace" class="fixed top-12 left-0 right-0 bottom-0 overflow-hidden bg-[var(--color-canvas)] select-none">
+    
+    <!-- Edge Ruler Canvases -->
+    <RulerCanvas />
+
+    <!-- Crosshair, Guidelines, and Cursor HUD -->
+    <CrosshairHUD />
+
+    <!-- 2D Object Sizer Bounding Box -->
+    <ObjectSizer />
+
+  </main>
+
+  <!-- Spacer to push SEO content below the fold -->
+  <div class="h-screen pointer-events-none" aria-hidden="true"></div>
+
+  <!-- In-Depth SEO Guide, Device Table, FAQ -->
+  <SeoContent />
+
+  <!-- Modals -->
+  <CalibrationModal />
+  <HowToModal />
+
+</Layout>
+
+<!-- Interactive Client Application Script -->
+<script>
+  import { drawRuler, type Unit, type RulerEdge, type Theme } from '../scripts/ruler-engine';
+  import {
+    getCurrentPpi,
+    savePpi,
+    autoDetectDevice,
+    calculatePpiFromDiagonal,
+    getCardWidthPixels,
+    getCardHeightPixels,
+    getCalibrationMeta,
+    DEVICE_DATABASE
+  } from '../scripts/calibration';
+
+  // State
+  let currentUnit: Unit = 'cm';
+  let currentPpi = getCurrentPpi();
+  let currentTheme: Theme = document.documentElement.classList.contains('light') ? 'light' : 'dark';
+
+  const activeEdges: Record<RulerEdge, boolean> = {
+    top: true,
+    bottom: false,
+    left: true,
+    right: false,
+  };
+
+  let isCrosshairActive = false;
+  let isGuidesActive = false;
+  let isSizerActive = false;
+
+  // Sizer box state (in pixels)
+  let sizerPos = { x: 180, y: 140, w: 240, h: 150 };
+
+  // DOM Elements
+  const canvasTop = document.getElementById('canvas-top') as HTMLCanvasElement;
+  const canvasBottom = document.getElementById('canvas-bottom') as HTMLCanvasElement;
+  const canvasLeft = document.getElementById('canvas-left') as HTMLCanvasElement;
+  const canvasRight = document.getElementById('canvas-right') as HTMLCanvasElement;
+
+  // Render all active edge rulers
+  function renderAllRulers() {
+    currentTheme = document.documentElement.classList.contains('light') ? 'light' : 'dark';
+    const opts = { unit: currentUnit, ppi: currentPpi, theme: currentTheme };
+    if (activeEdges.top && canvasTop) drawRuler(canvasTop, 'top', opts);
+    if (activeEdges.bottom && canvasBottom) drawRuler(canvasBottom, 'bottom', opts);
+    if (activeEdges.left && canvasLeft) drawRuler(canvasLeft, 'left', opts);
+    if (activeEdges.right && canvasRight) drawRuler(canvasRight, 'right', opts);
+
+    updateSizerUI();
+    updateStatusIndicators();
+  }
+
+  // Update edge button UI state
+  function updateEdgeUI() {
+    (['top', 'bottom', 'left', 'right'] as RulerEdge[]).forEach(edge => {
+      const isActive = activeEdges[edge];
+      const canvas = document.getElementById(`canvas-${edge}`);
+
+      document.querySelectorAll(`[data-edge="${edge}"]`).forEach(btn => {
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        if (isActive) {
+          btn.classList.add('bg-[var(--color-surface-3)]', 'text-[var(--color-ink)]');
+          btn.classList.remove('text-[var(--color-ink-subtle)]');
+        } else {
+          btn.classList.remove('bg-[var(--color-surface-3)]', 'text-[var(--color-ink)]');
+          btn.classList.add('text-[var(--color-ink-subtle)]');
+        }
+      });
+
+      if (canvas) {
+        if (isActive) canvas.classList.remove('hidden');
+        else canvas.classList.add('hidden');
+      }
+    });
+
+    renderAllRulers();
+  }
+
+  // Update unit buttons UI
+  function updateUnitUI() {
+    document.querySelectorAll('.unit-btn').forEach(btn => {
+      const u = btn.getAttribute('data-unit');
+      if (u === currentUnit) {
+        btn.classList.add('bg-[var(--color-surface-3)]', 'text-[var(--color-ink)]', 'shadow-sm');
+        btn.classList.remove('text-[var(--color-ink-subtle)]');
+      } else {
+        btn.classList.remove('bg-[var(--color-surface-3)]', 'text-[var(--color-ink)]', 'shadow-sm');
+        btn.classList.add('text-[var(--color-ink-subtle)]');
+      }
+    });
+
+    renderAllRulers();
+  }
+
+  // Theme Switcher Logic
+  function initTheme() {
+    const isLight = document.documentElement.classList.contains('light');
+    currentTheme = isLight ? 'light' : 'dark';
+
+    window.addEventListener('themechange', (e: any) => {
+      currentTheme = e.detail?.theme || (document.documentElement.classList.contains('light') ? 'light' : 'dark');
+      renderAllRulers();
+    });
+  }
+
+  // Status indicators in Navbar
+  function updateStatusIndicators() {
+    const meta = getCalibrationMeta();
+    const modalPpiTag = document.getElementById('modal-current-ppi-tag');
+    const ppiText = `${currentPpi.toFixed(1)} PPI`;
+
+    document.querySelectorAll('.nav-ppi-text').forEach(el => el.textContent = ppiText);
+    if (modalPpiTag) modalPpiTag.textContent = `${currentPpi.toFixed(2)} PPI (${meta.label})`;
+
+    const isCalibrated = meta.method !== 'default';
+    document.querySelectorAll('.cal-status-dot').forEach(el => {
+      el.className = isCalibrated
+        ? 'cal-status-dot w-2 h-2 rounded-full bg-[#27a644] shadow-[0_0_6px_rgba(39,166,68,0.8)] shrink-0'
+        : 'cal-status-dot w-2 h-2 rounded-full bg-[#f5a623] shrink-0';
+    });
+  }
+
+  // Format measurement value based on current unit
+  function formatLength(px: number): string {
+    const inches = px / currentPpi;
+    const mm = inches * 25.4;
+    const cm = mm / 10;
+
+    if (currentUnit === 'mm') return `${mm.toFixed(1)} mm`;
+    if (currentUnit === 'cm') return `${cm.toFixed(2)} cm`;
+    if (currentUnit === 'in') return `${inches.toFixed(2)}"`;
+    return `${Math.round(px)} px`;
+  }
+
+  // Update Object Sizer UI (Anti-collision & Full Name Diagonal)
+  function updateSizerUI() {
+    const sizer = document.getElementById('object-sizer-box');
+    if (!sizer || !isSizerActive) return;
+
+    sizer.style.left = `${sizerPos.x}px`;
+    sizer.style.top = `${sizerPos.y}px`;
+    sizer.style.width = `${sizerPos.w}px`;
+    sizer.style.height = `${sizerPos.h}px`;
+
+    const wLabel = document.getElementById('sizer-w-label');
+    const hLabel = document.getElementById('sizer-h-label');
+    const diagLabel = document.getElementById('sizer-diag-label');
+
+    const diagPx = Math.sqrt(sizerPos.w * sizerPos.w + sizerPos.h * sizerPos.h);
+
+    if (wLabel) wLabel.textContent = formatLength(sizerPos.w);
+    if (hLabel) hLabel.textContent = formatLength(sizerPos.h);
+    if (diagLabel) diagLabel.textContent = formatLength(diagPx);
+  }
+
+  // Tool button synchronization helper (Styled to match scale buttons)
+  function syncToolButton(toolName: string, active: boolean) {
+    document.querySelectorAll(`[data-tool="${toolName}"]`).forEach(btn => {
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      if (active) {
+        btn.classList.add('bg-[var(--color-surface-3)]', 'text-[var(--color-ink)]', 'shadow-sm');
+        btn.classList.remove('text-[var(--color-ink-subtle)]');
+      } else {
+        btn.classList.remove('bg-[var(--color-surface-3)]', 'text-[var(--color-ink)]', 'shadow-sm');
+        btn.classList.add('text-[var(--color-ink-subtle)]');
+      }
+    });
+  }
+
+  // Calibration Modal Logic
+  function initCalibrationModal() {
+    const modal = document.getElementById('calibration-modal');
+    const closeBtn = document.getElementById('close-cal-btn');
+    const cardBox = document.getElementById('card-alignment-box');
+
+    function openModal() {
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      populateAutoDetect();
+      populateDeviceList();
+      syncCardSlider();
+    }
+
+    function closeModal() {
+      if (!modal) return;
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.btn-calibrate-trigger').forEach(btn => {
+      btn.addEventListener('click', openModal);
+    });
+    closeBtn?.addEventListener('click', closeModal);
+
+    // Tab Switching
+    document.querySelectorAll('.cal-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.getAttribute('data-tab');
+        document.querySelectorAll('.cal-tab-btn').forEach(b => {
+          b.classList.remove('bg-[var(--color-surface-2)]', 'text-[var(--color-ink)]', 'border', 'border-[var(--color-hairline-strong)]');
+          b.classList.add('text-[var(--color-ink-subtle)]');
+        });
+        btn.classList.add('bg-[var(--color-surface-2)]', 'text-[var(--color-ink)]', 'border', 'border-[var(--color-hairline-strong)]');
+        btn.classList.remove('text-[var(--color-ink-subtle)]');
+
+        document.querySelectorAll('.cal-panel').forEach(p => p.classList.add('hidden'));
+        const activePanel = document.getElementById(`panel-${tab}`);
+        if (activePanel) activePanel.classList.remove('hidden');
+
+        if (tab === 'card') {
+          updateCardBoxSize(currentPpi);
+        }
+      });
+    });
+
+    // Auto-detect Tab
+    function populateAutoDetect() {
+      const auto = autoDetectDevice();
+      const nameEl = document.getElementById('auto-device-name');
+      const specsEl = document.getElementById('auto-device-specs');
+      const badgeEl = document.getElementById('auto-ppi-badge');
+
+      if (auto.device) {
+        if (nameEl) nameEl.textContent = auto.device.name;
+        if (specsEl) specsEl.textContent = `${auto.device.cssWidth}×${auto.device.cssHeight} @ ${auto.device.dpr}x DPR (จอภาพ ${auto.device.diagonal} นิ้ว)`;
+        if (badgeEl) badgeEl.textContent = `${auto.device.cssPpi} PPI`;
+      } else {
+        if (nameEl) nameEl.textContent = 'หน้าจอทั่วไป / จอภาพภายนอก';
+        if (specsEl) specsEl.textContent = `${window.screen.width}×${window.screen.height} @ ${window.devicePixelRatio || 1}x DPR`;
+        if (badgeEl) badgeEl.textContent = `~${auto.estimatedPpi} PPI`;
+      }
+    }
+
+    document.getElementById('apply-auto-btn')?.addEventListener('click', () => {
+      const auto = autoDetectDevice();
+      currentPpi = auto.estimatedPpi;
+      savePpi(currentPpi, {
+        method: 'auto',
+        label: auto.device ? auto.device.name : 'หน้าจอตรวจจับอัตโนมัติ',
+        timestamp: Date.now()
+      });
+      closeModal();
+      renderAllRulers();
+    });
+
+    // Device Database Tab
+    function populateDeviceList(query = '') {
+      const container = document.getElementById('device-list-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const filtered = DEVICE_DATABASE.filter(d =>
+        d.name.toLowerCase().includes(query.toLowerCase()) ||
+        d.category.toLowerCase().includes(query.toLowerCase())
+      );
+
+      filtered.forEach(d => {
+        const row = document.createElement('button');
+        row.className = 'w-full px-3 py-2 rounded-md hover:bg-[var(--color-surface-3)] text-left flex items-center justify-between text-[12px] text-[var(--color-ink-muted)] transition-colors group';
+        row.innerHTML = `
+          <div>
+            <span class="font-medium text-[var(--color-ink)] group-hover:text-[#5e6ad2]">${d.name}</span>
+            <span class="text-[10px] font-mono text-[var(--color-ink-tertiary)] block">${d.cssWidth}×${d.cssHeight} • ${d.diagonal}"</span>
+          </div>
+          <span class="font-mono text-[11px] text-[#5e6ad2] bg-[var(--color-canvas)] px-1.5 py-0.5 rounded border border-[var(--color-hairline)]">${d.cssPpi} PPI</span>
+        `;
+        row.addEventListener('click', () => {
+          currentPpi = d.cssPpi;
+          savePpi(currentPpi, { method: 'device', label: d.name, timestamp: Date.now() });
+          closeModal();
+          renderAllRulers();
+        });
+        container.appendChild(row);
+      });
+    }
+
+    document.getElementById('device-search-input')?.addEventListener('input', (e) => {
+      populateDeviceList((e.target as HTMLInputElement).value);
+    });
+
+    // Diagonal Tab
+    const diagInput = document.getElementById('diagonal-input') as HTMLInputElement;
+    const diagDisplay = document.getElementById('diagonal-ppi-display');
+
+    function updateDiagonalResult() {
+      if (!diagInput) return;
+      const diag = parseFloat(diagInput.value);
+      if (diag > 0) {
+        const calculated = calculatePpiFromDiagonal(diag);
+        if (diagDisplay) diagDisplay.textContent = `${calculated} PPI`;
+      }
+    }
+
+    diagInput?.addEventListener('input', updateDiagonalResult);
+
+    document.querySelectorAll('.diag-preset-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const d = chip.getAttribute('data-diag');
+        if (d && diagInput) {
+          diagInput.value = d;
+          updateDiagonalResult();
+        }
+      });
+    });
+
+    document.getElementById('apply-diagonal-btn')?.addEventListener('click', () => {
+      if (!diagInput) return;
+      const diag = parseFloat(diagInput.value);
+      if (diag > 0) {
+        currentPpi = calculatePpiFromDiagonal(diag);
+        savePpi(currentPpi, {
+          method: 'diagonal',
+          label: `หน้าจอ ${diag} นิ้ว`,
+          timestamp: Date.now()
+        });
+        closeModal();
+        renderAllRulers();
+      }
+    });
+
+    // Credit Card Tab
+    const cardSlider = document.getElementById('card-slider') as HTMLInputElement;
+    const cardReadout = document.getElementById('card-ppi-readout');
+    const cardDimensionTag = document.getElementById('card-dimension-tag');
+
+    function syncCardSlider() {
+      if (cardSlider) cardSlider.value = currentPpi.toString();
+      if (cardReadout) cardReadout.textContent = `${currentPpi.toFixed(1)} PPI`;
+      updateCardBoxSize(currentPpi);
+    }
+
+    function updateCardBoxSize(ppi: number) {
+      if (!cardBox) return;
+      const w = getCardWidthPixels(ppi);
+      const h = getCardHeightPixels(ppi);
+      cardBox.style.width = `${w}px`;
+      cardBox.style.height = `${h}px`;
+
+      // Dynamically calculate on-screen card dimensions as the scale slider is adjusted
+      const scaleFactor = ppi / 96.0;
+      const wMm = (85.60 * scaleFactor).toFixed(1);
+      const hMm = (53.98 * scaleFactor).toFixed(1);
+      if (cardDimensionTag) {
+        cardDimensionTag.textContent = `${wMm} × ${hMm} mm`;
+      }
+    }
+
+    cardSlider?.addEventListener('input', (e) => {
+      const val = parseFloat((e.target as HTMLInputElement).value);
+      if (!isNaN(val)) {
+        if (cardReadout) cardReadout.textContent = `${val.toFixed(1)} PPI`;
+        updateCardBoxSize(val);
+      }
+    });
+
+    document.getElementById('apply-card-btn')?.addEventListener('click', () => {
+      if (!cardSlider) return;
+      currentPpi = parseFloat(cardSlider.value);
+      savePpi(currentPpi, {
+        method: 'card',
+        label: 'ปรับเทียบด้วยบัตร',
+        timestamp: Date.now()
+      });
+      closeModal();
+      renderAllRulers();
+    });
+  }
+
+  // How-To Modal
+  function initHowToModal() {
+    const modal = document.getElementById('howto-modal');
+    const closeBtn = document.getElementById('close-howto-btn');
+    const gotItBtn = document.getElementById('got-it-btn');
+
+    function openHowTo() {
+      modal?.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeHowTo() {
+      modal?.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.btn-howto-trigger').forEach(btn => {
+      btn.addEventListener('click', openHowTo);
+    });
+    closeBtn?.addEventListener('click', closeHowTo);
+    gotItBtn?.addEventListener('click', closeHowTo);
+  }
+
+  // Initialize Tools (Guides, Crosshairs, Sizer)
+  function initTools() {
+    // Mobile Drawer Toggle
+    const btnMobileDrawer = document.getElementById('btn-mobile-drawer');
+    const mobileDrawer = document.getElementById('mobile-controls-drawer');
+    const drawerIconOpen = document.getElementById('drawer-icon-open');
+    const drawerIconClose = document.getElementById('drawer-icon-close');
+
+    function toggleMobileDrawer() {
+      if (!mobileDrawer) return;
+      const isOpen = !mobileDrawer.classList.contains('hidden');
+      if (isOpen) {
+        mobileDrawer.classList.add('hidden');
+        drawerIconOpen?.classList.remove('hidden');
+        drawerIconClose?.classList.add('hidden');
+      } else {
+        mobileDrawer.classList.remove('hidden');
+        drawerIconOpen?.classList.add('hidden');
+        drawerIconClose?.classList.remove('hidden');
+      }
+    }
+
+    btnMobileDrawer?.addEventListener('click', toggleMobileDrawer);
+
+    // Auto-close mobile drawer when tapping outside
+    document.addEventListener('pointerdown', (e) => {
+      if (!mobileDrawer || mobileDrawer.classList.contains('hidden')) return;
+      const target = e.target as HTMLElement;
+      if (!mobileDrawer.contains(target) && !btnMobileDrawer?.contains(target)) {
+        mobileDrawer.classList.add('hidden');
+        drawerIconOpen?.classList.remove('hidden');
+        drawerIconClose?.classList.add('hidden');
+      }
+    });
+
+    // Edge Toggles (Desktop & Mobile)
+    document.querySelectorAll('[data-edge]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const edge = btn.getAttribute('data-edge') as RulerEdge;
+        if (edge) {
+          activeEdges[edge] = !activeEdges[edge];
+          updateEdgeUI();
+        }
+      });
+    });
+
+    // Unit Selector (Desktop & Mobile)
+    document.querySelectorAll('.unit-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const u = btn.getAttribute('data-unit') as Unit;
+        if (u) {
+          currentUnit = u;
+          updateUnitUI();
+        }
+      });
+    });
+
+    // Fullscreen Toggle
+    document.querySelectorAll('.btn-fullscreen-trigger').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+          document.exitFullscreen().catch(() => {});
+        }
+      });
+    });
+
+    // Crosshair Tool
+    const crossH = document.getElementById('crosshair-h');
+    const crossV = document.getElementById('crosshair-v');
+    const cursorReadout = document.getElementById('cursor-readout');
+    const readoutCoords = document.getElementById('readout-coords');
+
+    function toggleCrosshair() {
+      isCrosshairActive = !isCrosshairActive;
+      syncToolButton('crosshair', isCrosshairActive);
+      if (crossH) crossH.classList.toggle('hidden', !isCrosshairActive);
+      if (crossV) crossV.classList.toggle('hidden', !isCrosshairActive);
+      if (cursorReadout) cursorReadout.classList.toggle('hidden', !isCrosshairActive);
+    }
+    document.querySelectorAll('[data-tool="crosshair"]').forEach(btn => {
+      btn.addEventListener('click', toggleCrosshair);
+    });
+
+    // Calipers Tool
+    const caliperOverlay = document.getElementById('caliper-overlay');
+    function toggleCalipers() {
+      isCaliperActive = !isCaliperActive;
+      syncToolButton('caliper', isCaliperActive);
+      if (caliperOverlay) caliperOverlay.classList.toggle('hidden', !isCaliperActive);
+      if (isCaliperActive) updateCaliperUI();
+    }
+    document.querySelectorAll('[data-tool="caliper"]').forEach(btn => {
+      btn.addEventListener('click', toggleCalipers);
+    });
+
+    // Caliper Knob Dragging
+    const startKnob = document.getElementById('caliper-h-start');
+    const endKnob = document.getElementById('caliper-h-end');
+
+    // 2D Object Sizer Tool
+    const sizerBox = document.getElementById('object-sizer-box');
+    const sizerCenter = document.getElementById('sizer-center-drag');
+
+    function toggleSizer() {
+      isSizerActive = !isSizerActive;
+      syncToolButton('sizer', isSizerActive);
+      if (sizerBox) sizerBox.classList.toggle('hidden', !isSizerActive);
+      if (isSizerActive) updateSizerUI();
+    }
+    document.querySelectorAll('[data-tool="sizer"]').forEach(btn => {
+      btn.addEventListener('click', toggleSizer);
+    });
+
+    // Drag center of Sizer
+    if (sizerCenter) {
+      let isDragging = false;
+      let startX = 0, startY = 0, origX = 0, origY = 0;
+
+      sizerCenter.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        origX = sizerPos.x;
+        origY = sizerPos.y;
+        sizerCenter.setPointerCapture(e.pointerId);
+      });
+
+      sizerCenter.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+        sizerPos.x = Math.max(0, origX + (e.clientX - startX));
+        sizerPos.y = Math.max(0, origY + (e.clientY - startY));
+        updateSizerUI();
+      });
+
+      sizerCenter.addEventListener('pointerup', (e) => {
+        isDragging = false;
+        try { sizerCenter.releasePointerCapture(e.pointerId); } catch {}
+      });
+    }
+
+    // Resize handles for Sizer
+    document.querySelectorAll('.sizer-handle').forEach(handle => {
+      const hType = handle.getAttribute('data-handle');
+      let isResizing = false;
+      let startX = 0, startY = 0, orig = { ...sizerPos };
+
+      handle.addEventListener('pointerdown', (e) => {
+        isResizing = true;
+        startX = (e as PointerEvent).clientX;
+        startY = (e as PointerEvent).clientY;
+        orig = { ...sizerPos };
+        (handle as HTMLElement).setPointerCapture((e as PointerEvent).pointerId);
+      });
+
+      handle.addEventListener('pointermove', (e) => {
+        if (!isResizing) return;
+        const dx = (e as PointerEvent).clientX - startX;
+        const dy = (e as PointerEvent).clientY - startY;
+
+        if (hType === 'se') {
+          sizerPos.w = Math.max(40, orig.w + dx);
+          sizerPos.h = Math.max(40, orig.h + dy);
+        } else if (hType === 'sw') {
+          const newW = Math.max(40, orig.w - dx);
+          sizerPos.x = orig.x + (orig.w - newW);
+          sizerPos.w = newW;
+          sizerPos.h = Math.max(40, orig.h + dy);
+        } else if (hType === 'ne') {
+          sizerPos.w = Math.max(40, orig.w + dx);
+          const newH = Math.max(40, orig.h - dy);
+          sizerPos.y = orig.y + (orig.h - newH);
+          sizerPos.h = newH;
+        } else if (hType === 'nw') {
+          const newW = Math.max(40, orig.w - dx);
+          const newH = Math.max(40, orig.h - dy);
+          sizerPos.x = orig.x + (orig.w - newW);
+          sizerPos.y = orig.y + (orig.h - newH);
+          sizerPos.w = newW;
+          sizerPos.h = newH;
+        }
+        updateSizerUI();
+      });
+
+      handle.addEventListener('pointerup', (e) => {
+        isResizing = false;
+        try { (handle as HTMLElement).releasePointerCapture((e as PointerEvent).pointerId); } catch {}
+      });
+    });
+
+    // Guidelines Tool (Only active when clicked!)
+    const guidesContainer = document.getElementById('guides-container');
+    function toggleGuides() {
+      isGuidesActive = !isGuidesActive;
+      syncToolButton('guides', isGuidesActive);
+      if (guidesContainer) {
+        guidesContainer.classList.toggle('hidden', !isGuidesActive);
+      }
+      [canvasTop, canvasBottom, canvasLeft, canvasRight].forEach(c => {
+        if (c) {
+          if (isGuidesActive) {
+            c.classList.remove('cursor-default');
+            c.classList.add('cursor-crosshair');
+          } else {
+            c.classList.remove('cursor-crosshair');
+            c.classList.add('cursor-default');
+          }
+        }
+      });
+    }
+    document.querySelectorAll('[data-tool="guides"]').forEach(btn => {
+      btn.addEventListener('click', toggleGuides);
+    });
+
+    // Click on canvas to drop guideline (ONLY if Guidelines tool is currently ACTIVE!)
+    [canvasTop, canvasBottom, canvasLeft, canvasRight].forEach(canvas => {
+      canvas?.addEventListener('click', (e) => {
+        if (!isGuidesActive || !guidesContainer) return;
+        const isHorizontal = canvas === canvasTop || canvas === canvasBottom;
+        const line = document.createElement('div');
+
+        if (isHorizontal) {
+          const x = e.clientX;
+          line.className = 'absolute top-0 bottom-0 w-[1px] bg-[#5e6ad2] cursor-ew-resize group pointer-events-auto shadow-[0_0_4px_rgba(94,106,210,0.8)]';
+          line.style.left = `${x}px`;
+          line.title = 'Double click to remove guideline';
+          line.innerHTML = `
+            <div class="absolute top-12 -translate-x-1/2 px-1.5 py-0.5 rounded bg-[var(--color-surface-1)] border border-[#5e6ad2] text-[10px] font-mono text-[var(--color-ink)] whitespace-nowrap shadow-md">
+              ${formatLength(x)}
+            </div>
+          `;
+        } else {
+          const y = e.clientY;
+          const navH = getNavbarHeight();
+          line.className = 'absolute left-0 right-0 h-[1px] bg-[#5e6ad2] cursor-ns-resize group pointer-events-auto shadow-[0_0_4px_rgba(94,106,210,0.8)]';
+          line.style.top = `${y - navH}px`;
+          line.title = 'Double click to remove guideline';
+          line.innerHTML = `
+            <div class="absolute left-12 -translate-y-1/2 px-1.5 py-0.5 rounded bg-[var(--color-surface-1)] border border-[#5e6ad2] text-[10px] font-mono text-[var(--color-ink)] whitespace-nowrap shadow-md">
+              ${formatLength(y - navH)}
+            </div>
+          `;
+        }
+
+        // Double click to remove guideline
+        line.addEventListener('dblclick', () => line.remove());
+        guidesContainer.appendChild(line);
+      });
+    });
+
+    // Mousemove for Crosshairs
+    const workspace = document.getElementById('ruler-workspace');
+    workspace?.addEventListener('mousemove', (e) => {
+      if (isCrosshairActive) {
+        const navH = getNavbarHeight();
+        if (crossH) crossH.style.top = `${e.clientY - navH}px`;
+        if (crossV) crossV.style.left = `${e.clientX}px`;
+
+        if (cursorReadout && readoutCoords) {
+          cursorReadout.style.left = `${e.clientX}px`;
+          cursorReadout.style.top = `${e.clientY - navH}px`;
+          readoutCoords.textContent = `X: ${formatLength(e.clientX)}, Y: ${formatLength(e.clientY - navH)}`;
+        }
+      }
+    });
+
+    // Language Switcher
+    document.querySelectorAll('.btn-lang-trigger').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const current = btn.textContent?.trim();
+        const next = current === 'TH' ? 'EN' : 'TH';
+        document.querySelectorAll('.btn-lang-trigger').forEach(b => b.textContent = next);
+      });
+    });
+
+    // Keyboard Shortcuts Listener
+    window.addEventListener('keydown', (e) => {
+      if (['INPUT', 'SELECT', 'TEXTAREA'].includes((e.target as HTMLElement).tagName)) return;
+
+      const key = e.key.toLowerCase();
+      if (key === 'k') {
+        (document.querySelector('.btn-calibrate-trigger') as HTMLElement)?.click();
+      } else if (key === 'd') {
+        (document.querySelector('.btn-theme-trigger') as HTMLElement)?.click();
+      } else if (key === 's') {
+        toggleSizer();
+      } else if (key === 'c') {
+        toggleCrosshair();
+      } else if (key === 'g') {
+        toggleGuides();
+      } else if (key === 'f') {
+        (document.querySelector('.btn-fullscreen-trigger') as HTMLElement)?.click();
+      } else if (key === '?' || key === 'h') {
+        (document.querySelector('.btn-howto-trigger') as HTMLElement)?.click();
+      } else if (key === 'u') {
+        const units: Unit[] = ['cm', 'mm', 'in', 'px'];
+        const nextIdx = (units.indexOf(currentUnit) + 1) % units.length;
+        currentUnit = units[nextIdx];
+        updateUnitUI();
+      } else if (key === 'escape') {
+        document.getElementById('calibration-modal')?.classList.add('hidden');
+        document.getElementById('howto-modal')?.classList.add('hidden');
+        document.getElementById('mobile-controls-drawer')?.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+
+  // Dynamic navbar height calculation
+  function getNavbarHeight(): number {
+    const navbar = document.getElementById('navbar');
+    return navbar ? navbar.getBoundingClientRect().height : 48;
+  }
+
+  function updateNavbarOffset() {
+    const workspace = document.getElementById('ruler-workspace');
+    if (workspace) {
+      workspace.style.top = `${getNavbarHeight()}px`;
+    }
+  }
+
+  // Window Resize & Orientation handling
+  window.addEventListener('resize', () => {
+    updateNavbarOffset();
+    renderAllRulers();
+  });
+
+  window.addEventListener('orientationchange', () => {
+    setTimeout(() => {
+      updateNavbarOffset();
+      renderAllRulers();
+    }, 150);
+  });
+
+  // Global PPI changed event
+  window.addEventListener('ruler:ppi-changed', (e: any) => {
+    currentPpi = e.detail.ppi;
+    renderAllRulers();
+  });
+
+  // Initialize application on DOM ready
+  document.addEventListener('DOMContentLoaded', () => {
+    updateNavbarOffset();
+    initTheme();
+    updateEdgeUI();
+    updateUnitUI();
+    initCalibrationModal();
+    initHowToModal();
+    initTools();
+    renderAllRulers();
+  });
+</script>

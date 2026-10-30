@@ -1,0 +1,89 @@
+---
+// HowToModal.astro - 100% Thai User Guide & Keyboard Shortcuts Modal
+---
+
+<div id="howto-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-md hidden select-none">
+  <div class="bg-[var(--color-surface-1)] border border-[var(--color-hairline)] rounded-2xl shadow-2xl w-full max-w-[480px] max-h-[88vh] sm:max-h-[90vh] flex flex-col overflow-hidden text-[var(--color-ink)]">
+    
+    <!-- Header -->
+    <div class="flex items-center justify-between px-4 sm:px-6 pt-4 sm:pt-5 pb-3 sm:pb-4 border-b border-[var(--color-hairline)] shrink-0">
+      <div>
+        <span class="text-[10px] font-mono font-semibold text-[#5e6ad2] uppercase tracking-wider">คู่มือการใช้งาน</span>
+        <h2 class="text-[16px] sm:text-[17px] font-semibold tracking-tight text-[var(--color-ink)] mt-0.5">วิธีใช้งานไม้บรรทัดออนไลน์</h2>
+      </div>
+      <button id="close-howto-btn" class="w-8 h-8 rounded-lg text-[var(--color-ink-subtle)] hover:text-[var(--color-ink)] hover:bg-[var(--color-surface-2)] flex items-center justify-center transition-colors cursor-pointer" aria-label="ปิดคู่มือ">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
+      </button>
+    </div>
+
+    <!-- Content -->
+    <div class="p-4 sm:p-6 overflow-y-auto space-y-4 sm:space-y-5 text-[12px] sm:text-[13px] text-[var(--color-ink-muted)] leading-relaxed">
+      
+      <!-- Step 1: Calibrate -->
+      <div class="flex items-start gap-3">
+        <div class="w-6 h-6 rounded-md bg-[#5e6ad2]/20 border border-[#5e6ad2]/40 flex items-center justify-center text-[11px] font-mono font-bold text-[#5e6ad2] shrink-0">
+          1
+        </div>
+        <div>
+          <h3 class="font-semibold text-[var(--color-ink)] mb-1">ปรับเทียบขนาดหน้าจอให้ตรงกับขนาดจริง</h3>
+          <p class="text-[var(--color-ink-subtle)] text-[12px]">
+            หน้าจอแต่ละเครื่องมีความหนาแน่นพิกเซล (PPI) ต่างกัน กดปุ่ม <strong class="text-[var(--color-ink)]">ปรับเทียบจอ</strong> เพื่อตรวจจับรุ่นอัตโนมัติ กรอกขนาดจอ หรือทาบบัตรประชาชน/เครดิตจริง
+          </p>
+        </div>
+      </div>
+
+      <!-- Step 2: Measure -->
+      <div class="flex items-start gap-3">
+        <div class="w-6 h-6 rounded-md bg-[#5e6ad2]/20 border border-[#5e6ad2]/40 flex items-center justify-center text-[11px] font-mono font-bold text-[#5e6ad2] shrink-0">
+          2
+        </div>
+        <div>
+          <h3 class="font-semibold text-[var(--color-ink)] mb-1">วางวัตถุชิดขอบจอ หรือใช้เครื่องมือช่วยวัด</h3>
+          <p class="text-[var(--color-ink-subtle)] text-[12px]">
+            เลือกขอบไม้บรรทัด (บน ล่าง ซ้าย ขวา) เพื่อนำวัตถุจริงมาทาบวัด หรือเปิดใช้ <strong class="text-[var(--color-ink)]">กล่องวัดวัตถุ 2D (S)</strong> เพื่อวัดขนาดความกว้าง ความยาว และเส้นทแยงมุม
+          </p>
+        </div>
+      </div>
+
+      <!-- Keyboard Shortcuts List -->
+      <div class="pt-3 border-t border-[var(--color-hairline)]">
+        <h4 class="text-[11px] sm:text-[12px] font-mono font-semibold text-[var(--color-ink)] mb-2 sm:mb-3 uppercase tracking-wider">คีย์ลัดบนแป้นพิมพ์ (Keyboard Shortcuts)</h4>
+        <div class="grid grid-cols-2 gap-1.5 sm:gap-2 text-[10px] sm:text-[11px]">
+          <div class="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[var(--color-surface-2)] border border-[var(--color-hairline)]">
+            <span class="text-[var(--color-ink-subtle)]">ปรับเทียบจอ</span>
+            <kbd class="px-1.5 py-0.5 rounded bg-[var(--color-canvas)] border border-[var(--color-hairline-strong)] font-mono text-[var(--color-ink)] font-bold">K</kbd>
+          </div>
+          <div class="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[var(--color-surface-2)] border border-[var(--color-hairline)]">
+            <span class="text-[var(--color-ink-subtle)]">สลับโหมดสี</span>
+            <kbd class="px-1.5 py-0.5 rounded bg-[var(--color-canvas)] border border-[var(--color-hairline-strong)] font-mono text-[var(--color-ink)] font-bold">D</kbd>
+          </div>
+          <div class="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[var(--color-surface-2)] border border-[var(--color-hairline)]">
+            <span class="text-[var(--color-ink-subtle)]">กล่องวัด 2D</span>
+            <kbd class="px-1.5 py-0.5 rounded bg-[var(--color-canvas)] border border-[var(--color-hairline-strong)] font-mono text-[var(--color-ink)] font-bold">S</kbd>
+          </div>
+          <div class="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[var(--color-surface-2)] border border-[var(--color-hairline)]">
+            <span class="text-[var(--color-ink-subtle)]">เป้าเล็ง</span>
+            <kbd class="px-1.5 py-0.5 rounded bg-[var(--color-canvas)] border border-[var(--color-hairline-strong)] font-mono text-[var(--color-ink)] font-bold">C</kbd>
+          </div>
+          <div class="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[var(--color-surface-2)] border border-[var(--color-hairline)]">
+            <span class="text-[var(--color-ink-subtle)]">เส้นไกด์วัด</span>
+            <kbd class="px-1.5 py-0.5 rounded bg-[var(--color-canvas)] border border-[var(--color-hairline-strong)] font-mono text-[var(--color-ink)] font-bold">G</kbd>
+          </div>
+          <div class="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[var(--color-surface-2)] border border-[var(--color-hairline)]">
+            <span class="text-[var(--color-ink-subtle)]">เปลี่ยนหน่วยวัด</span>
+            <kbd class="px-1.5 py-0.5 rounded bg-[var(--color-canvas)] border border-[var(--color-hairline-strong)] font-mono text-[var(--color-ink)] font-bold">U</kbd>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="px-4 sm:px-6 py-3 sm:py-4 bg-[var(--color-surface-2)] border-t border-[var(--color-hairline)] shrink-0">
+      <button id="got-it-btn" class="w-full py-2.5 rounded-xl bg-[#5e6ad2] hover:bg-[#828fff] text-white text-[13px] font-medium transition-colors shadow-md active:scale-[0.98] cursor-pointer">
+        เข้าใจแล้ว เริ่มวัดขนาดเลย
+      </button>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,17 @@
+---
+// CrosshairHUD.astro - Crosshair lines, Guide lines, and Cursor readout
+---
+
+<div id="hud-layer" class="absolute inset-0 pointer-events-none z-15 overflow-hidden">
+  <!-- Crosshair Horizontal & Vertical Lines -->
+  <div id="crosshair-h" class="absolute left-0 right-0 h-[1px] bg-[#5e6ad2]/50 hidden"></div>
+  <div id="crosshair-v" class="absolute top-0 bottom-0 w-[1px] bg-[#5e6ad2]/50 hidden"></div>
+
+  <!-- Custom Guide Lines Container (Hidden until Guidelines tool is activated) -->
+  <div id="guides-container" class="absolute inset-0 pointer-events-none hidden"></div>
+
+  <!-- Floating Cursor Readout Badge -->
+  <div id="cursor-readout" class="absolute hidden px-2 py-1 rounded bg-[var(--color-surface-1)] border border-[var(--color-hairline-strong)] text-[10px] font-mono text-[var(--color-ink)] whitespace-nowrap shadow-lg pointer-events-none z-30 transform translate-x-3 translate-y-3">
+    <span id="readout-coords">X: 0mm, Y: 0mm</span>
+  </div>
+</div>

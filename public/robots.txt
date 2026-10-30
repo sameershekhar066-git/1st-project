@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /404
+Disallow: /500
+
+# XML Sitemap Link
+Sitemap: https://ไม้บรรทัด.com/sitemap.xml
+

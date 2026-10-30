@@ -1,0 +1,120 @@
+---
+// about.astro - เกี่ยวกับเรา (ไม้บรรทัด.com)
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "หน้าแรก",
+      "item": "https://ไม้บรรทัด.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "เกี่ยวกับเรา",
+      "item": "https://ไม้บรรทัด.com/about"
+    }
+  ]
+};
+---
+
+<Layout 
+  title="เกี่ยวกับเรา — ไม้บรรทัด.com ไม้บรรทัดออนไลน์ ขนาดจริง" 
+  description="รู้จักกับ ไม้บรรทัด.com เว็บไซต์ให้บริการไม้บรรทัดออนไลน์ ขนาดจริง แม่นยำ 100% ด้วยระบบคำนวณและปรับเทียบความหนาแน่นพิกเซลหน้าจอ (PPI)"
+>
+  <Navbar />
+
+  <!-- Breadcrumb JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 pt-20 sm:pt-24 pb-20 space-y-12 text-[var(--color-ink)]">
+    
+    <!-- Hero Header -->
+    <header class="space-y-3 text-center sm:text-left border-b border-[var(--color-hairline)] pb-8">
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--color-ink)]">
+        เกี่ยวกับเรา
+      </h1>
+      <p class="text-[15px] sm:text-[16px] text-[var(--color-ink-muted)] leading-relaxed max-w-2xl">
+        มุ่งมั่นให้บริการเครื่องมือวัดขนาดออนไลน์ที่มีความแม่นยำสูงระดับมาตรฐานสากล แสดงผลขนาดจริง 100% บนทุกหน้าจอทั้งคอมพิวเตอร์ แท็บเล็ต และสมาร์ตโฟน
+      </p>
+      <div class="pt-2">
+        <a href="/" class="inline-flex items-center gap-1.5 text-[12px] font-mono text-[#5e6ad2] hover:underline">
+          <span>← กลับสู่หน้าไม้บรรทัด</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Mission & The Core Problem -->
+    <section class="space-y-4">
+      <h2 class="text-xl sm:text-2xl font-bold tracking-tight">ทำไมไม้บรรทัดบนหน้าจอทั่วไปจึงไม่ตรงกับขนาดจริง?</h2>
+      <div class="p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] space-y-4 text-[14px] text-[var(--color-ink-muted)] leading-relaxed">
+        <p>
+          ในเว็บเบราว์เซอร์ทั่วไป หน่วยวัด CSS เช่น <code class="text-[#5e6ad2] font-mono font-bold">1in</code> หรือ <code class="text-[#5e6ad2] font-mono font-bold">1cm</code> เป็นค่าสมมติเชิงตรรกะ (Logical Pixels) ที่ถูกกำหนดตายตัวไว้ที่ 96 CSS พิกเซลต่อนิ้ว แต่ในความเป็นจริง หน้าจออุปกรณ์แต่ละรุ่นมีค่าความหนาแน่นพิกเซลที่แท้จริง (<strong class="text-[var(--color-ink)]">PPI — Pixels Per Inch</strong>) แตกต่างกันอย่างมาก ตั้งแต่ <strong class="text-[var(--color-ink)]">80 PPI จนถึงมากกว่า 460 PPI</strong> บนหน้าจอ Retina และ OLED สมัยใหม่
+        </p>
+        <p>
+          ด้วยเหตุนี้ ไม้บรรทัดออนไลน์ทั่วไปที่ไม่ได้ผ่านการปรับเทียบขนาดหน้าจอจึงมักจะ <strong class="text-[#ef4444]">คลาดเคลื่อนจากขนาดจริง 20% ถึง 45%</strong> สิ่งที่มองเห็นเป็น 5 ซม. บนหน้าจอโน้ตบุ๊กอาจมีขนาดเพียง 3.4 ซม. ในโลกความเป็นจริง
+        </p>
+        <p>
+          เว็บไซต์ <strong class="text-[var(--color-ink)]">ไม้บรรทัด.com</strong> ถูกพัฒนาขึ้นมาเพื่อแก้ปัญหานี้โดยเฉพาะ ด้วยการวิเคราะห์สเปกฮาร์ดแวร์หน้าจอร่วมกับระบบปรับเทียบขนาดที่แม่นยำ ทำให้คุณสามารถวัดสิ่งของบนหน้าจอได้ตรงกับขนาดจริงอย่างไร้ที่ติ
+        </p>
+      </div>
+    </section>
+
+    <!-- Target Audience / Who Uses It -->
+    <section class="space-y-4">
+      <h2 class="text-xl sm:text-2xl font-bold tracking-tight">ใครบ้างที่ใช้งาน ไม้บรรทัด.com?</h2>
+      <div class="p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)]">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[13px] text-[var(--color-ink-muted)]">
+          <div class="flex items-start gap-2.5">
+            <span class="text-[#5e6ad2] font-bold">✓</span>
+            <div>
+              <strong class="text-[var(--color-ink)]">นักเรียนและครูอาจารย์:</strong>
+              <p class="text-[var(--color-ink-subtle)]">ใช้วัดขนาดชิ้นงานและรูปทรงในห้องเรียนได้ทันทีโดยไม่ต้องพกพาไม้บรรทัดพลาสติก</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <span class="text-[#5e6ad2] font-bold">✓</span>
+            <div>
+              <strong class="text-[var(--color-ink)]">นักช้อปออนไลน์:</strong>
+              <p class="text-[var(--color-ink-subtle)]">ใช้วัดขนาดเครื่องประดับ แหวน ต่างหู ความกว้างสายนาฬิกา และสินค้าขนาดเล็กก่อนตัดสินใจสั่งซื้อ</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <span class="text-[#5e6ad2] font-bold">✓</span>
+            <div>
+              <strong class="text-[var(--color-ink)]">ดีไซเนอร์และนักพัฒนาเว็บ:</strong>
+              <p class="text-[var(--color-ink-subtle)]">ตรวจสอบสัดส่วนจริงเปรียบเทียบกับพิกเซลบนหน้าจอ (px vs cm) เพื่อประสบการณ์การใช้งานที่ดีที่สุด</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <span class="text-[#5e6ad2] font-bold">✓</span>
+            <div>
+              <strong class="text-[var(--color-ink)]">ช่างฝีมือและวิศวกร:</strong>
+              <p class="text-[var(--color-ink-subtle)]">ใช้วัดขนาดน็อต สกรู ความหนาของชิ้นส่วน และบอร์ดอิเล็กทรอนิกส์ด้วยเครื่องมือกล่องวัด 2D และเส้นไกด์</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Navigation Footer -->
+    <footer class="pt-8 border-t border-[var(--color-hairline)] flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-[var(--color-ink-subtle)]">
+      <div class="flex items-center gap-2">
+        <span class="font-semibold text-[var(--color-ink)]">ไม้บรรทัด.com</span>
+        <span>•</span>
+        <span>© 2026 ไม้บรรทัดออนไลน์ ขนาดจริง</span>
+      </div>
+      <nav class="flex items-center gap-4">
+        <a href="/privacy-policy" class="hover:text-[var(--color-ink)] transition-colors">นโยบายความเป็นส่วนตัว</a>
+        <a href="/terms" class="hover:text-[var(--color-ink)] transition-colors">ข้อกำหนดการใช้งาน</a>
+        <a href="/contact" class="hover:text-[var(--color-ink)] transition-colors">ติดต่อเรา</a>
+      </nav>
+    </footer>
+
+  </main>
+</Layout>

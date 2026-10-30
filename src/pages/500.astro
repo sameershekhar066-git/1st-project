@@ -1,0 +1,49 @@
+---
+// 500.astro - หน้า 500 ข้อผิดพลาดระบบ (ไม้บรรทัด.com)
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+---
+
+<Layout 
+  title="500 — ข้อผิดพลาดเซิร์ฟเวอร์ | ไม้บรรทัด.com" 
+  description="เกิดข้อผิดพลาดชั่วคราวในระบบ กรุณาลองใหม่อีกครั้งในภายหลัง หรือกลับสู่หน้าไม้บรรทัด"
+  noindex={true}
+>
+  <Navbar />
+
+  <main class="min-h-[85vh] flex flex-col items-center justify-center px-4 sm:px-6 pt-20 pb-16 text-center text-[var(--color-ink)]">
+    <div class="max-w-md w-full space-y-6">
+      
+      <!-- 500 Display -->
+      <div class="space-y-1">
+        <span class="text-6xl sm:text-7xl font-extrabold text-[#5e6ad2] tracking-tight font-mono block">500</span>
+        <span class="text-xs font-mono font-semibold tracking-widest text-[#f5a623] uppercase">ข้อผิดพลาด</span>
+      </div>
+
+      <!-- Text Content -->
+      <div class="space-y-2">
+        <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--color-ink)]">
+          ข้อผิดพลาดเซิร์ฟเวอร์
+        </h1>
+        <p class="text-[14px] sm:text-[15px] text-[var(--color-ink-muted)] leading-relaxed max-w-sm mx-auto">
+          เกิดข้อผิดพลาดชั่วคราวในระบบ กรุณาลองใหม่อีกครั้ง หรือกลับสู่หน้าไม้บรรทัด
+        </p>
+      </div>
+
+      <!-- Single Action Button: Back to Ruler -->
+      <div class="pt-2 flex items-center justify-center text-[13px] font-medium">
+        <a 
+          href="/" 
+          class="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-[#5e6ad2] hover:bg-[#828fff] text-white shadow-md active:scale-[0.99] transition-all cursor-pointer"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>กลับสู่หน้าไม้บรรทัด</span>
+        </a>
+      </div>
+
+    </div>
+  </main>
+</Layout>

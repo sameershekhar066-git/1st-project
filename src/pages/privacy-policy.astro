@@ -1,0 +1,124 @@
+---
+// privacy-policy.astro - นโยบายความเป็นส่วนตัว (ไม้บรรทัด.com)
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "หน้าแรก",
+      "item": "https://ไม้บรรทัด.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "นโยบายความเป็นส่วนตัว",
+      "item": "https://ไม้บรรทัด.com/privacy-policy"
+    }
+  ]
+};
+---
+
+<Layout 
+  title="นโยบายความเป็นส่วนตัว — ไม้บรรทัด.com" 
+  description="นโยบายความเป็นส่วนตัวของ ไม้บรรทัด.com ทำงานบนเบราว์เซอร์ 100% ไม่มีการบันทึกข้อมูลส่วนบุคคล ปลอดภัย ไร้การติดตาม"
+>
+  <Navbar />
+
+  <!-- Breadcrumb JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 pt-20 sm:pt-24 pb-20 space-y-10 text-[var(--color-ink)]">
+    
+    <!-- Hero Header -->
+    <header class="space-y-3 text-center sm:text-left border-b border-[var(--color-hairline)] pb-8">
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--color-ink)]">
+        นโยบายความเป็นส่วนตัว
+      </h1>
+      <p class="text-[14px] text-[var(--color-ink-subtle)]">
+        อัปเดตล่าสุด: กันยายน 2026 • มีผลบังคับใช้: กันยายน 2026
+      </p>
+      <div class="pt-2">
+        <a href="/" class="inline-flex items-center gap-1.5 text-[12px] font-mono text-[#5e6ad2] hover:underline">
+          <span>← กลับสู่หน้าไม้บรรทัด</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Policy Sections -->
+    <article class="space-y-6 text-[14px] text-[var(--color-ink-muted)] leading-relaxed">
+      
+      <div class="p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] space-y-3">
+        <h2 class="text-[18px] font-semibold text-[var(--color-ink)]">1. การคุ้มครองความเป็นส่วนตัวของผู้ใช้งาน</h2>
+        <p>
+          ที่ <strong class="text-[var(--color-ink)]">ไม้บรรทัด.com</strong> เราเชื่อมั่นว่าเครื่องมือวัดขนาดควรทำงานได้อย่างรวดเร็ว แม่นยำ และปลอดภัยสูงสุด เราไม่ต้องการให้ผู้ใช้สมัครสมาชิก กรอกอีเมล เบอร์โทรศัพท์ หรือสร้างบัญชีใดๆ คุณสามารถใช้งานฟังก์ชันไม้บรรทัดออนไลน์ทั้งหมดได้โดยไม่ต้องระบุตัวตน
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] space-y-3">
+        <h2 class="text-[18px] font-semibold text-[var(--color-ink)]">2. การประมวลผลบนเบราว์เซอร์ของผู้ใช้ 100%</h2>
+        <p>
+          การคำนวณทั้งหมด ไม่ว่าจะเป็นการหาค่าความหนาแน่นพิกเซล (PPI), การเรนเดอร์สเกลไม้บรรทัด, กล่องวัดขนาด 2D และเส้นบอกแนว จะประมวลผลบนเบราว์เซอร์ของคุณโดยตรงผ่าน HTML5 Canvas และ JavaScript ไม่มีการส่งข้อมูลพิกัดการวัดหรือรูปภาพใดๆ ไปยังเซิร์ฟเวอร์ภายนอก
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] space-y-3">
+        <h2 class="text-[18px] font-semibold text-[var(--color-ink)]">3. การจัดเก็บข้อมูลบนเครื่อง (localStorage)</h2>
+        <p>
+          เพื่อความสะดวกของคุณในการใช้งานครั้งถัดไปโดยไม่ต้องปรับเทียบหน้าจอซ้ำ เราจะบันทึกการตั้งค่าที่ไม่สามารถระบุตัวบุคคลได้ไว้ในเบราว์เซอร์ของคุณ:
+        </p>
+        <ul class="space-y-2 list-disc pl-5 text-[13px] text-[var(--color-ink-subtle)]">
+          <li><code class="text-[#5e6ad2] font-mono">ruler_ppi</code>: ค่าความหนาแน่นพิกเซลหน้าจอที่คุณปรับเทียบไว้ (ตัวเลข)</li>
+          <li><code class="text-[#5e6ad2] font-mono">ruler_theme</code>: โหมดการแสดงผลที่เลือก มืด หรือ สว่าง (ข้อความ)</li>
+        </ul>
+        <p class="text-[13px]">
+          ข้อมูลเหล่านี้จะถูกเก็บไว้บนอุปกรณ์ของคุณเท่านั้น และสามารถล้างออกได้ตลอดเวลาผ่านเมนู "ล้างข้อมูลการท่องเว็บ" ของเบราว์เซอร์
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] space-y-3">
+        <h2 class="text-[18px] font-semibold text-[var(--color-ink)]">4. คุกกี้และการติดตามบุคคลที่สาม</h2>
+        <p>
+          เราไม่มีการใช้คุกกี้ติดตามข้ามเว็บไซต์ (Cross-site tracking cookies) หรือสคริปต์สอดแนมพฤติกรรมผู้ใช้เพื่อการโฆษณาที่รบกวนความเป็นส่วนตัว
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] space-y-3">
+        <h2 class="text-[18px] font-semibold text-[var(--color-ink)]">5. การปฏิบัติตาม พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล (PDPA)</h2>
+        <p>
+          เนื่องจาก ไม้บรรทัด.com ไม่มีการเก็บรวบรวมหรือประมวลผลข้อมูลส่วนบุคคลที่ระบุตัวตนได้ (Personally Identifiable Information) เราจึงปฏิบัติตามหลักการลดการใช้ข้อมูล (Data Minimization) ตามกฎหมาย PDPA (พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562) และมาตรฐานสากล GDPR อย่างเคร่งครัด
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] space-y-3">
+        <h2 class="text-[18px] font-semibold text-[var(--color-ink)]">6. ติดต่อสอบถามเกี่ยวกับความเป็นส่วนตัว</h2>
+        <p>
+          หากคุณมีคำถาม ข้อเสนอแนะ หรือข้อสงสัยเกี่ยวกับนโยบายความเป็นส่วนตัว สามารถติดต่อทีมงานได้ที่:
+        </p>
+        <p class="font-mono text-[13px] text-[#5e6ad2]">
+          <a href="/contact" class="hover:underline">support@ไม้บรรทัด.com (หรือผ่านหน้าติดต่อเรา)</a>
+        </p>
+      </div>
+
+    </article>
+
+    <!-- Quick Navigation Footer -->
+    <footer class="pt-8 border-t border-[var(--color-hairline)] flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-[var(--color-ink-subtle)]">
+      <div class="flex items-center gap-2">
+        <span class="font-semibold text-[var(--color-ink)]">ไม้บรรทัด.com</span>
+        <span>•</span>
+        <span>© 2026 ไม้บรรทัดออนไลน์ ขนาดจริง</span>
+      </div>
+      <nav class="flex items-center gap-4">
+        <a href="/about" class="hover:text-[var(--color-ink)] transition-colors">เกี่ยวกับเรา</a>
+        <a href="/terms" class="hover:text-[var(--color-ink)] transition-colors">ข้อกำหนดการใช้งาน</a>
+        <a href="/contact" class="hover:text-[var(--color-ink)] transition-colors">ติดต่อเรา</a>
+      </nav>
+    </footer>
+
+  </main>
+</Layout>

@@ -1,0 +1,29 @@
+---
+// RulerCanvas.astro - HiDPI edge ruler canvases (clean scale without 0,0 box)
+---
+
+<div id="ruler-container" class="absolute inset-0 pointer-events-none z-20">
+  <!-- Top Ruler Canvas (Horizontal) -->
+  <canvas
+    id="canvas-top"
+    class="ruler-canvas absolute top-0 left-0 right-0 w-full h-[40px] pointer-events-auto cursor-default border-b border-[var(--color-hairline)]"
+  ></canvas>
+
+  <!-- Bottom Ruler Canvas (Horizontal) -->
+  <canvas
+    id="canvas-bottom"
+    class="ruler-canvas absolute bottom-0 left-0 right-0 w-full h-[40px] pointer-events-auto cursor-default border-t border-[var(--color-hairline)] hidden"
+  ></canvas>
+
+  <!-- Left Ruler Canvas (Vertical) -->
+  <canvas
+    id="canvas-left"
+    class="ruler-canvas absolute top-0 bottom-0 left-0 w-[40px] h-full pointer-events-auto cursor-default border-r border-[var(--color-hairline)]"
+  ></canvas>
+
+  <!-- Right Ruler Canvas (Vertical) -->
+  <canvas
+    id="canvas-right"
+    class="ruler-canvas absolute top-0 bottom-0 right-0 w-[40px] h-full pointer-events-auto cursor-default border-l border-[var(--color-hairline)] hidden"
+  ></canvas>
+</div>

@@ -1,0 +1,125 @@
+---
+// terms.astro - ข้อกำหนดและเงื่อนไขการใช้งาน (ไม้บรรทัด.com)
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "หน้าแรก",
+      "item": "https://ไม้บรรทัด.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "ข้อกำหนดการใช้งาน",
+      "item": "https://ไม้บรรทัด.com/terms"
+    }
+  ]
+};
+---
+
+<Layout 
+  title="ข้อกำหนดและเงื่อนไขการใช้งาน — ไม้บรรทัด.com" 
+  description="ข้อกำหนดและเงื่อนไขการใช้งานเว็บไซต์ ไม้บรรทัด.com แนวทางการปรับเทียบขนาดหน้าจอ และข้อจำกัดความรับผิดชอบ"
+>
+  <Navbar />
+
+  <!-- Breadcrumb JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 pt-20 sm:pt-24 pb-20 space-y-10 text-[var(--color-ink)]">
+    
+    <!-- Hero Header -->
+    <header class="space-y-3 text-center sm:text-left border-b border-[var(--color-hairline)] pb-8">
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--color-ink)]">
+        ข้อกำหนดและเงื่อนไขการใช้งาน
+      </h1>
+      <p class="text-[14px] text-[var(--color-ink-subtle)]">
+        อัปเดตล่าสุด: กันยายน 2026 • มีผลบังคับใช้: กันยายน 2026
+      </p>
+      <div class="pt-2">
+        <a href="/" class="inline-flex items-center gap-1.5 text-[12px] font-mono text-[#5e6ad2] hover:underline">
+          <span>← กลับสู่หน้าไม้บรรทัด</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Terms Sections -->
+    <article class="space-y-6 text-[14px] text-[var(--color-ink-muted)] leading-relaxed">
+      
+      <div class="p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] space-y-3">
+        <h2 class="text-[18px] font-semibold text-[var(--color-ink)]">1. การยอมรับข้อกำหนด</h2>
+        <p>
+          เมื่อคุณเข้าสู่หรือใช้งานเว็บไซต์ <strong class="text-[var(--color-ink)]">ไม้บรรทัด.com</strong> ("ผู้ให้บริการ") ถือว่าคุณได้ยอมรับและตกลงที่จะปฏิบัติตามข้อกำหนดและเงื่อนไขการใช้งานฉบับนี้ หากคุณไม่เห็นด้วยกับข้อกำหนดใดๆ โปรดยุติการใช้งานเว็บไซต์ทันที
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] space-y-3">
+        <h2 class="text-[18px] font-semibold text-[var(--color-ink)]">2. ขอบเขตการให้บริการและการใช้งานฟรี</h2>
+        <p>
+          ไม้บรรทัด.com ให้บริการเครื่องมือวัดขนาดออนไลน์ ไม้บรรทัดขอบจอ กล่องวัดวัตถุ 2 มิติ และเส้นบอกแนว เพื่ออำนวยความสะดวกแก่ผู้ใช้งานทั่วไปโดยไม่คิดค่าบริการ ทั้งสำหรับการใช้งานส่วนบุคคล การศึกษา งานออกแบบ และงานธุรกิจทั่วไป
+        </p>
+        <p>
+          ผู้ใช้งานตกลงที่จะไม่ทำการโจมตีระบบ ดึงข้อมูลอย่างผิดปกติ หรือพยายามแทรกแซงการให้บริการของเว็บไซต์
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] space-y-3">
+        <h2 class="text-[18px] font-semibold text-[var(--color-ink)]">3. ความแม่นยำและการปรับเทียบหน้าจอ (Calibration Disclaimer)</h2>
+        <p>
+          แม้ว่า ไม้บรรทัด.com จะใช้อัลกอริทึมการคำนวณและปรับเทียบขนาดหน้าจอมาตรฐานสากล เพื่อให้ได้สเกลขนาดจริง 100% แต่ผลการวัดอาจได้รับผลกระทบจากปัจจัยภายนอก ดังนี้:
+        </p>
+        <ul class="space-y-2 list-disc pl-5 text-[13px] text-[var(--color-ink-subtle)]">
+          <li>การตั้งค่าขยายการแสดงผลของระบบปฏิบัติการ (เช่น Display Scaling 125%, 150% บน Windows)</li>
+          <li>ระดับการซูมของเว็บเบราว์เซอร์ (แนะนำให้ตั้งค่าซูมเป็น 100% เพื่อความแม่นยำสูงสุด)</li>
+          <li>ความแม่นยำในการทาบบัตรอ้างอิงของผู้ใช้งานขณะทำการปรับเทียบ</li>
+        </ul>
+        <p class="text-[13px] text-[var(--color-ink-subtle)] pt-1">
+          <strong>หมายเหตุสำคัญ:</strong> เว็บไซต์นี้เป็นเครื่องมืออำนวยความสะดวก มิได้มีไว้เพื่อใช้ในงานวิศวกรรมการผลิตระดับอุตสาหกรรม การแพทย์ หรือการรังวัดที่ดินตามกฎหมายที่ต้องใช้เครื่องมือวัดที่ได้รับการรับรองเฉพาะทาง
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] space-y-3">
+        <h2 class="text-[18px] font-semibold text-[var(--color-ink)]">4. ทรัพย์สินทางปัญญา</h2>
+        <p>
+          องค์ประกอบการออกแบบ อินเทอร์เฟซ โค้ดโปรแกรม โลโก้ และเครื่องหมายการค้าบน ไม้บรรทัด.com เป็นทรัพย์สินทางปัญญาของผู้ให้บริการ และได้รับการคุ้มครองตามกฎหมายว่าด้วยทรัพย์สินทางปัญญา
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] space-y-3">
+        <h2 class="text-[18px] font-semibold text-[var(--color-ink)]">5. ข้อจำกัดความรับผิดชอบ</h2>
+        <p>
+          ผู้ให้บริการจะไม่รับผิดชอบต่อความเสียหายใดๆ ไม่ว่าทางตรงหรือทางอ้อม ที่อาจเกิดขึ้นจากการใช้งานเว็บไซต์ หรือการนำผลการวัดไปใช้งานในทางใดทางหนึ่ง
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] space-y-3">
+        <h2 class="text-[18px] font-semibold text-[var(--color-ink)]">6. การเปลี่ยนแปลงข้อกำหนด</h2>
+        <p>
+          เราขอสงวนสิทธิ์ในการแก้ไขหรือปรับปรุงข้อกำหนดเหล่านี้ได้ทุกเมื่อ การใช้งานเว็บไซต์ต่อไปหลังจากมีการเปลี่ยนแปลงจะถือว่าท่านยอมรับข้อกำหนดใหม่นั้นโดยปริยาย
+        </p>
+      </div>
+
+    </article>
+
+    <!-- Quick Navigation Footer -->
+    <footer class="pt-8 border-t border-[var(--color-hairline)] flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-[var(--color-ink-subtle)]">
+      <div class="flex items-center gap-2">
+        <span class="font-semibold text-[var(--color-ink)]">ไม้บรรทัด.com</span>
+        <span>•</span>
+        <span>© 2026 ไม้บรรทัดออนไลน์ ขนาดจริง</span>
+      </div>
+      <nav class="flex items-center gap-4">
+        <a href="/about" class="hover:text-[var(--color-ink)] transition-colors">เกี่ยวกับเรา</a>
+        <a href="/privacy-policy" class="hover:text-[var(--color-ink)] transition-colors">นโยบายความเป็นส่วนตัว</a>
+        <a href="/contact" class="hover:text-[var(--color-ink)] transition-colors">ติดต่อเรา</a>
+      </nav>
+    </footer>
+
+  </main>
+</Layout>

@@ -1,0 +1,42 @@
+---
+// ObjectSizer.astro - 2D Object Sizer Bounding Box with Centered Anti-Collision HUD (100% Thai)
+---
+
+<div id="object-sizer-box" class="absolute z-35 hidden select-none touch-none border-2 border-dashed border-[#5e6ad2] bg-[#5e6ad2]/10 rounded shadow-[0_0_15px_rgba(94,106,210,0.2)]" style="top: 20%; left: 20%; width: 220px; height: 140px;">
+  <!-- Dimensions HUD Tag (Centered, Anti-Collision, Full Name "เส้นทแยงมุม", Mobile Responsive) -->
+  <div id="sizer-hud" class="absolute -top-10 sm:-top-11 left-1/2 -translate-x-1/2 max-w-[95vw] flex items-center gap-1.5 sm:gap-2.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-[var(--color-surface-1)] border border-[var(--color-hairline-strong)] text-[10px] sm:text-[11px] font-mono text-[var(--color-ink)] shadow-xl pointer-events-none whitespace-nowrap z-40">
+    <div class="flex items-center gap-1 font-medium">
+      <span class="text-[var(--color-ink-subtle)] text-[9px] sm:text-[10px]">กว้าง:</span>
+      <span id="sizer-w-label" class="text-[#5e6ad2] font-semibold">0 cm</span>
+      <span class="text-[var(--color-ink-tertiary)] mx-0.5">×</span>
+      <span class="text-[var(--color-ink-subtle)] text-[9px] sm:text-[10px]">ยาว:</span>
+      <span id="sizer-h-label" class="text-[#5e6ad2] font-semibold">0 cm</span>
+    </div>
+    <span class="w-px h-3 bg-[var(--color-hairline-strong)]"></span>
+    <div class="flex items-center gap-1">
+      <span class="text-[var(--color-ink-subtle)] text-[9px] sm:text-[10px] font-sans">เส้นทแยงมุม:</span>
+      <span id="sizer-diag-label" class="text-[#5e6ad2] font-semibold">0 cm</span>
+    </div>
+  </div>
+
+  <!-- Center Drag Handle -->
+  <div id="sizer-center-drag" class="absolute inset-2 sm:inset-4 cursor-move flex items-center justify-center pointer-events-auto touch-none">
+    <div class="px-2 py-0.5 sm:py-1 rounded bg-[var(--color-surface-2)]/90 border border-[var(--color-hairline)] text-[9px] sm:text-[10px] font-mono text-[var(--color-ink-subtle)] pointer-events-none">
+      ลากเพื่อเลื่อนตำแหน่ง
+    </div>
+  </div>
+
+  <!-- Corner Resize Handles (Touch-Optimized Large Hit Targets for Mobile) -->
+  <div id="sizer-handle-nw" data-handle="nw" class="sizer-handle absolute -top-3.5 -left-3.5 w-7 h-7 sm:w-6 sm:h-6 flex items-center justify-center cursor-nwse-resize pointer-events-auto touch-none">
+    <div class="w-4 h-4 sm:w-3.5 sm:h-3.5 rounded-full bg-[#5e6ad2] border-2 border-[var(--color-canvas)] shadow-md"></div>
+  </div>
+  <div id="sizer-handle-ne" data-handle="ne" class="sizer-handle absolute -top-3.5 -right-3.5 w-7 h-7 sm:w-6 sm:h-6 flex items-center justify-center cursor-nesw-resize pointer-events-auto touch-none">
+    <div class="w-4 h-4 sm:w-3.5 sm:h-3.5 rounded-full bg-[#5e6ad2] border-2 border-[var(--color-canvas)] shadow-md"></div>
+  </div>
+  <div id="sizer-handle-se" data-handle="se" class="sizer-handle absolute -bottom-3.5 -right-3.5 w-7 h-7 sm:w-6 sm:h-6 flex items-center justify-center cursor-nwse-resize pointer-events-auto touch-none">
+    <div class="w-4 h-4 sm:w-3.5 sm:h-3.5 rounded-full bg-[#5e6ad2] border-2 border-[var(--color-canvas)] shadow-md"></div>
+  </div>
+  <div id="sizer-handle-sw" data-handle="sw" class="sizer-handle absolute -bottom-3.5 -left-3.5 w-7 h-7 sm:w-6 sm:h-6 flex items-center justify-center cursor-nesw-resize pointer-events-auto touch-none">
+    <div class="w-4 h-4 sm:w-3.5 sm:h-3.5 rounded-full bg-[#5e6ad2] border-2 border-[var(--color-canvas)] shadow-md"></div>
+  </div>
+</div>

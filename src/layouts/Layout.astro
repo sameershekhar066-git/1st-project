@@ -1,0 +1,134 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = "ไม้บรรทัด — ไม้บรรทัดออนไลน์ ขนาดจริง วัดไม้บรรทัดออนไลน์ ซม. mm นิ้ว ฟรี | ไม้บรรทัด.com",
+  description = "ไม้บรรทัด.com เครื่องมือ ไม้บรรทัดออนไลน์ ขนาดจริง 100% ใช้งานฟรี วัดไม้บรรทัดออนไลน์บนหน้าจอมือถือและคอมพิวเตอร์ รองรับ ไม้บรรทัดออนไลน์ เซนติเมตร (ซม.), ไม้บรรทัดออนไลน์ มิลลิเมตร (mm), ไม้บรรทัดออนไลน์ นิ้ว (in) และพิกเซล (px)",
+  noindex = false
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, 'https://ไม้บรรทัด.com');
+---
+
+<!doctype html>
+<html lang="th" class="dark" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="ไม้บรรทัด, ไม้บรรทัด.com, ไม้บรรทัดออนไลน์, ไม้บรรทัดออนไลน์ ขนาดจริง, ไม้บรรทัดออนไลน์ นิ้ว, ไม้บรรทัด ออนไลน์ ฟรี, ไม้บรรทัดออนไลน์ ซม, ไม้บรรทัดออนไลน์ mm, ไม้บรรทัด ออนไลน์ เซนติเมตร, ไม้บรรทัดออนไลน์ มิลลิเมตร, วัดไม้บรรทัดออนไลน์" />
+    <meta name="author" content="ไม้บรรทัด.com" />
+    <meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Hreflang Tags (Targeting Thailand & Thai-speaking Users Worldwide) -->
+    <link rel="alternate" hreflang="th" href={canonicalURL} />
+    <link rel="alternate" hreflang="th-TH" href={canonicalURL} />
+    <link rel="alternate" hreflang="x-default" href={canonicalURL} />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-553Z5J5EPZ"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-553Z5J5EPZ');
+    </script>
+
+    <!-- Theme Initialization Script (prevents flash) -->
+    <script is:inline>
+      (function() {
+        const saved = localStorage.getItem('ruler_theme');
+        const theme = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        if (theme === 'light') {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.add('light');
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.classList.remove('light');
+          document.documentElement.classList.add('dark');
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="th_TH" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content="ไม้บรรทัด.com" />
+    <meta property="og:image" content="https://ไม้บรรทัด.com/favicon.svg" />
+    <meta property="og:image:alt" content="ไม้บรรทัด.com — ไม้บรรทัดออนไลน์ ขนาดจริง" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://ไม้บรรทัด.com/favicon.svg" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <!-- Favicon, Manifest & App Meta -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="ไม้บรรทัด.com" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+
+    <!-- Structured Data JSON-LD (WebApplication) -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "@id": "https://ไม้บรรทัด.com/#webapp",
+      "name": "ไม้บรรทัด.com — ไม้บรรทัดออนไลน์ ขนาดจริง",
+      "alternateName": [
+        "ไม้บรรทัด",
+        "ไม้บรรทัดออนไลน์",
+        "ไม้บรรทัดออนไลน์ ขนาดจริง",
+        "วัดไม้บรรทัดออนไลน์",
+        "ไม้บรรทัด ออนไลน์ ฟรี",
+        "ไม้บรรทัดออนไลน์ ซม",
+        "ไม้บรรทัดออนไลน์ mm",
+        "ไม้บรรทัดออนไลน์ นิ้ว",
+        "ไม้บรรทัด ออนไลน์ เซนติเมตร",
+        "ไม้บรรทัดออนไลน์ มิลลิเมตร"
+      ],
+      "url": "https://ไม้บรรทัด.com",
+      "description": description,
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All Web Browsers (iOS, Android, Windows, macOS, Linux)",
+      "inLanguage": "th",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "THB"
+      },
+      "featureList": [
+        "ไม้บรรทัดออนไลน์ ขนาดจริง แม่นยำระดับมิลลิเมตร",
+        "วัดไม้บรรทัดออนไลน์ ได้ทั้ง เซนติเมตร (ซม.), มิลลิเมตร (mm), นิ้ว (in) และพิกเซล (px)",
+        "ระบบปรับเทียบขนาดหน้าจอ (Calibration) ด้วยบัตรเครดิต/ประชาชน, ขนาดหน้าจอ, หรือตรวจจับอัตโนมัติ",
+        "เครื่องมือกล่องวัดขนาด 2D Sizer, เป้าเล็ง Crosshair และเส้นไกด์วัดขนาด (Guidelines)",
+        "ใช้งานฟรี 100% ไม่ต้องติดตั้งแอปพลิเคชัน ใช้งานได้ทันทีบนมือถือและคอมพิวเตอร์"
+      ]
+    })} />
+  </head>
+  <body class="bg-[var(--color-canvas)] text-[var(--color-ink)] antialiased selection:bg-[#5e6ad2]/30 min-h-screen">
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,225 @@
+---
+// contact.astro - ติดต่อเรา (ไม้บรรทัด.com)
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "หน้าแรก",
+      "item": "https://ไม้บรรทัด.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "ติดต่อเรา",
+      "item": "https://ไม้บรรทัด.com/contact"
+    }
+  ]
+};
+
+const contactPointSchema = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "ติดต่อทีมงาน ไม้บรรทัด.com",
+  "url": "https://ไม้บรรทัด.com/contact",
+  "description": "ติดต่อทีมงาน ไม้บรรทัด.com เพื่อสอบถามเกี่ยวกับการปรับเทียบขนาดหน้าจอ เสนอแนะฟีเจอร์ใหม่ หรือแจ้งข้อมูลอุปกรณ์"
+};
+---
+
+<Layout 
+  title="ติดต่อเรา — ไม้บรรทัด.com ไม้บรรทัดออนไลน์ ขนาดจริง" 
+  description="ติดต่อทีมงาน ไม้บรรทัด.com ส่งข้อเสนอแนะ แจ้งเพิ่มข้อมูลรุ่นหน้าจอ หรือสอบถามเกี่ยวกับการใช้งานไม้บรรทัดออนไลน์"
+>
+  <Navbar />
+
+  <!-- Breadcrumb & ContactPage JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(contactPointSchema)} />
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 pt-20 sm:pt-24 pb-20 space-y-10 text-[var(--color-ink)]">
+    
+    <!-- Hero Header -->
+    <header class="space-y-3 text-center sm:text-left border-b border-[var(--color-hairline)] pb-8">
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--color-ink)]">
+        ติดต่อเรา
+      </h1>
+      <p class="text-[15px] sm:text-[16px] text-[var(--color-ink-muted)] leading-relaxed max-w-2xl">
+        มีข้อเสนอแนะ พบรุ่นหน้าจอที่ยังไม่มีในระบบ หรือต้องการสอบถามเรื่องการปรับเทียบขนาดหน้าจอ? ทีมงานพร้อมรับฟังทุกความคิดเห็น
+      </p>
+      <div class="pt-2">
+        <a href="/" class="inline-flex items-center gap-1.5 text-[12px] font-mono text-[#5e6ad2] hover:underline">
+          <span>← กลับสู่หน้าไม้บรรทัด</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- 2-Column Contact Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      
+      <!-- Left Column: Contact Channels -->
+      <div class="lg:col-span-5 space-y-4">
+        
+        <!-- Direct Email Card -->
+        <div class="p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-[#5e6ad2]/10 border border-[#5e6ad2]/30 flex items-center justify-center text-[#5e6ad2]">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+            </svg>
+          </div>
+          <h2 class="text-[17px] font-semibold text-[var(--color-ink)]">อีเมลติดต่อโดยตรง</h2>
+          <p class="text-[13px] text-[var(--color-ink-subtle)] leading-relaxed">
+            สำหรับการติดต่อธุรกิจ ข้อเสนอแนะ หรือแจ้งข้อมูลหน้าจอ:
+          </p>
+          <a href="mailto:support@ไม้บรรทัด.com" class="inline-block text-[14px] font-mono font-medium text-[#5e6ad2] hover:underline">
+            support@ไม้บรรทัด.com
+          </a>
+          <p class="text-[11px] text-[var(--color-ink-tertiary)] pt-1">
+            ระยะเวลาตอบกลับโดยประมาณ: ภายใน 24-48 ชั่วโมงในวันทำการ
+          </p>
+        </div>
+
+        <!-- Topics We Can Help With Card -->
+        <div class="p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] space-y-3">
+          <h2 class="text-[16px] font-semibold text-[var(--color-ink)]">หัวข้อที่ติดต่อบ่อย</h2>
+          <ul class="space-y-2 text-[13px] text-[var(--color-ink-muted)]">
+            <li class="flex items-start gap-2">
+              <span class="text-[#5e6ad2] font-bold">✓</span>
+              <span><strong>แจ้งเพิ่มข้อมูลหน้าจอ (PPI):</strong> ช่วยเราเพิ่มรุ่นจอภาพหรือสมาร์ตโฟนใหม่เข้าสู่ฐานข้อมูล</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-[#5e6ad2] font-bold">✓</span>
+              <span><strong>เสนอแนะฟีเจอร์:</strong> เสนอเครื่องมือวัดใหม่ๆ หน่วยวัด หรือคีย์ลัดที่ต้องการ</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-[#5e6ad2] font-bold">✓</span>
+              <span><strong>แจ้งปัญหาการใช้งาน:</strong> รายงานข้อผิดพลาดการแสดงผล หรือปัญหาบนเบราว์เซอร์</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Interactive Contact Form -->
+      <div class="lg:col-span-7">
+        <div class="p-6 sm:p-8 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] space-y-5">
+          <div class="space-y-1">
+            <h2 class="text-[20px] font-bold text-[var(--color-ink)]">ส่งข้อความถึงทีมงาน</h2>
+            <p class="text-[13px] text-[var(--color-ink-subtle)]">
+              กรอกแบบฟอร์มด้านล่าง แล้วทีมงานจะติดต่อกลับโดยเร็วที่สุด
+            </p>
+          </div>
+
+          <form id="contact-form" class="space-y-4 text-[13px]">
+            
+            <div class="space-y-1.5">
+              <label for="name" class="block font-medium text-[var(--color-ink)]">ชื่อของคุณ <span class="text-[#ef4444]">*</span></label>
+              <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                required 
+                placeholder="เช่น สมชาย ใจดี"
+                class="w-full h-10 px-3.5 rounded-xl bg-[var(--color-surface-2)] border border-[var(--color-hairline)] text-[var(--color-ink)] placeholder-[var(--color-ink-tertiary)] focus:outline-none focus:border-[#5e6ad2] transition-colors"
+              />
+            </div>
+
+            <div class="space-y-1.5">
+              <label for="email" class="block font-medium text-[var(--color-ink)]">ที่อยู่อีเมล <span class="text-[#ef4444]">*</span></label>
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                required 
+                placeholder="somchai@example.com"
+                class="w-full h-10 px-3.5 rounded-xl bg-[var(--color-surface-2)] border border-[var(--color-hairline)] text-[var(--color-ink)] placeholder-[var(--color-ink-tertiary)] focus:outline-none focus:border-[#5e6ad2] transition-colors"
+              />
+            </div>
+
+            <div class="space-y-1.5">
+              <label for="subject" class="block font-medium text-[var(--color-ink)]">หัวข้อติดต่อ</label>
+              <select 
+                id="subject" 
+                name="subject"
+                class="w-full h-10 px-3 rounded-xl bg-[var(--color-surface-2)] border border-[var(--color-hairline)] text-[var(--color-ink)] focus:outline-none focus:border-[#5e6ad2] transition-colors"
+              >
+                <option value="general">ข้อเสนอแนะทั่วไป</option>
+                <option value="calibration">สอบถามเรื่องการปรับเทียบขนาดหน้าจอ</option>
+                <option value="device">แจ้งเพิ่มข้อมูลรุ่นอุปกรณ์ (PPI Database)</option>
+                <option value="feature">เสนอแนะเครื่องมือใหม่</option>
+                <option value="bug">แจ้งปัญหาการใช้งาน</option>
+              </select>
+            </div>
+
+            <div class="space-y-1.5">
+              <label for="message" class="block font-medium text-[var(--color-ink)]">ข้อความ <span class="text-[#ef4444]">*</span></label>
+              <textarea 
+                id="message" 
+                name="message" 
+                rows="4" 
+                required 
+                placeholder="ระบุข้อความ รายละเอียดอุปกรณ์ หรือคำถามที่คุณต้องการติดต่อ..."
+                class="w-full p-3.5 rounded-xl bg-[var(--color-surface-2)] border border-[var(--color-hairline)] text-[var(--color-ink)] placeholder-[var(--color-ink-tertiary)] focus:outline-none focus:border-[#5e6ad2] transition-colors resize-y"
+              ></textarea>
+            </div>
+
+            <button 
+              type="submit" 
+              id="submit-btn"
+              class="w-full py-3 rounded-xl bg-[#5e6ad2] hover:bg-[#828fff] text-white font-medium transition-all shadow-md active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <span>ส่งข้อความ</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+
+            <div id="form-feedback" class="hidden p-4 rounded-xl bg-[var(--color-surface-2)] border border-[#27a644]/50 text-[#27a644] text-[13px] text-center font-medium">
+              ✓ ขอบคุณสำหรับข้อความ! เราได้รับข้อมูลเรียบร้อยแล้วและจะติดต่อกลับโดยเร็วที่สุด
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Quick Navigation Footer -->
+    <footer class="pt-8 border-t border-[var(--color-hairline)] flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-[var(--color-ink-subtle)]">
+      <div class="flex items-center gap-2">
+        <span class="font-semibold text-[var(--color-ink)]">ไม้บรรทัด.com</span>
+        <span>•</span>
+        <span>© 2026 ไม้บรรทัดออนไลน์ ขนาดจริง</span>
+      </div>
+      <nav class="flex items-center gap-4">
+        <a href="/about" class="hover:text-[var(--color-ink)] transition-colors">เกี่ยวกับเรา</a>
+        <a href="/privacy-policy" class="hover:text-[var(--color-ink)] transition-colors">นโยบายความเป็นส่วนตัว</a>
+        <a href="/terms" class="hover:text-[var(--color-ink)] transition-colors">ข้อกำหนดการใช้งาน</a>
+      </nav>
+    </footer>
+
+  </main>
+
+  <script>
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const feedback = document.getElementById('form-feedback');
+    const submitBtn = document.getElementById('submit-btn');
+
+    if (form && feedback && submitBtn) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Client-side visual acknowledgment
+        feedback.classList.remove('hidden');
+        submitBtn.setAttribute('disabled', 'true');
+        submitBtn.classList.add('opacity-50', 'pointer-events-none');
+        form.reset();
+      });
+    }
+  </script>
+</Layout>

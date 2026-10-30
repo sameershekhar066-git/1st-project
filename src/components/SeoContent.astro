@@ -1,0 +1,322 @@
+---
+// SeoContent.astro - Comprehensive 100% Thai SEO Guide, Target Keywords, Device Table & FAQ for ไม้บรรทัด.com
+
+const faqItems = [
+  {
+    question: "ไม้บรรทัด 1 อัน มีกี่เซนติเมตร?",
+    answer: "ไม้บรรทัดมาตรฐานที่ใช้ในโรงเรียนและสำนักงานทั่วไปมักมีความยาว 30 เซนติเมตร (30 ซม.) หรือเท่ากับ 12 นิ้ว (1 ฟุต) ส่วนไม้บรรทัดพกพามักมีขนาด 15 ซม. (6 นิ้ว) และไม้เมตรมีความยาว 100 ซม. (1 เมตร) สำหรับบนเว็บไซต์ ไม้บรรทัด.com ไม้บรรทัดออนไลน์ของเราจะขยายความยาวเต็มพื้นที่หน้าจอของคุณโดยอัตโนมัติ"
+  },
+  {
+    question: "ขนาด 5 ซม. ใหญ่แค่ไหน?",
+    answer: "ขนาด 5 เซนติเมตร (5 ซม. หรือ 50 มิลลิเมตร / mm) มีความยาวประมาณ 1.97 นิ้ว (เกือบ 2 นิ้ว) สิ่งของในชีวิตประจำวันที่มีขนาดใกล้เคียง 5 ซม. ได้แก่ ความยาวของถ่านไฟฉายขนาด AA มาตรฐาน, ความกว้างของบัตรประชาชน/บัตรเครดิต, หรือความยาวของกุญแจบ้านทั่วไป"
+  },
+  {
+    question: "ไม้บรรทัด 5 นิ้ว ยาวเท่าไหร่?",
+    answer: "ไม้บรรทัด 5 นิ้ว มีความยาวตรงกับ 12.7 เซนติเมตร (127 มิลลิเมตร) พอดี เป็นขนาดกะทัดรัดที่นิยมใช้สำหรับสมุดโน้ตพกพา การวัดการ์ด และการวัดขนาดชิ้นงานขนาดเล็ก"
+  },
+  {
+    question: "ไม้บรรทัด 30 ซม. มีกี่นิ้ว?",
+    answer: "ไม้บรรทัด 30 เซนติเมตร (30 ซม.) มีความยาวเท่ากับ 11.81 นิ้ว (มักปัดเป็น 12 นิ้ว หรือ 1 ฟุต บนไม้บรรทัดนักเรียนทั่วไป) เนื่องจาก 1 นิ้วมีค่าเท่ากับ 2.54 ซม. ดังนั้น 30 ÷ 2.54 = 11.811 นิ้ว"
+  },
+  {
+    question: "5 ซม. เทียบเท่ากับอะไรโดยประมาณ?",
+    answer: "5 ซม. เทียบเท่ากับประมาณ 2 นิ้ว โดยเทียบเคียงได้กับความยาวของถ่าน AA, ความสูงแนวตั้งของบัตรเครดิต (5.4 ซม.), เส้นผ่านศูนย์กลางของฝากระป๋องน้ำอัดลม หรือความยาวของคลิปหนีบกระดาษขนาดใหญ่"
+  },
+  {
+    question: "สามารถใช้โทรศัพท์มือถือเป็นไม้บรรทัดได้หรือไม่?",
+    answer: "ได้แน่นอน คุณสามารถใช้โทรศัพท์มือถือเป็น ไม้บรรทัดออนไลน์ ขนาดจริง ได้อย่างแม่นยำ เพียงเปิดเว็บไซต์ ไม้บรรทัด.com บนเบราว์เซอร์มือถือ ทำการปรับเทียบหน้าจอ (Calibrate) และนำวัตถุชิ้นเล็กมาวางทาบบนหน้าจอเพื่อวัดเป็น เซนติเมตร (ซม.), มิลลิเมตร (mm) หรือ นิ้ว ได้ทันที"
+  },
+  {
+    question: "มีไม้บรรทัดออนไลน์หรือไม่?",
+    answer: "มี เว็บไซต์ ไม้บรรทัด.com ให้บริการ ไม้บรรทัด ออนไลน์ ฟรี ที่แสดงสเกลขนาดจริง 100% บนหน้าจอทุกประเภท ทั้งมือถือ แท็บเล็ต และคอมพิวเตอร์ ใช้งานได้ทันทีโดยไม่ต้องดาวน์โหลดหรือติดตั้งแอปใดๆ"
+  },
+  {
+    question: "จะดูได้อย่างไรว่าระยะ 1 นิ้วยาวแค่ไหน?",
+    answer: "บน ไม้บรรทัดออนไลน์ นิ้ว ระยะ 1 นิ้วมีค่าเท่ากับ 2.54 เซนติเมตร (25.4 มม.) โดยดูจากตัวเลข '1' บนแถบสเกลนิ้ว ซึ่งจะมีการแบ่งขีดย่อยเป็น 1/2, 1/4, 1/8, 1/16 และ 1/32 นิ้ว สำหรับการวัดที่ละเอียด"
+  },
+  {
+    question: "วิธีวัดเซนติเมตรออนไลน์ทำอย่างไร?",
+    answer: "วิธี วัดไม้บรรทัดออนไลน์ เป็นเซนติเมตร: 1) เลือกหน่วยวัดเป็น 'cm' บน ไม้บรรทัด.com, 2) ปรับเทียบหน้าจอด้วยระบบอัตโนมัติหรือทาบบัตรประชาชน, 3) วางขอบเริ่มต้นของวัตถุให้ตรงกับเลข 0 บนหน้าจอ, และ 4) อ่านค่าความยาวจากตัวเลขและขีดมิลลิเมตรที่ปลายวัตถุ"
+  },
+  {
+    question: "สมาร์ตโฟนสามารถวัดขนาดได้หรือไม่?",
+    answer: "สมาร์ตโฟนสามารถวัดขนาดได้ทั้งวัตถุขนาดเล็กและระยะทาง สำหรับวัตถุขนาดเล็ก การใช้ ไม้บรรทัดออนไลน์ ขนาดจริง บนหน้าจอผ่าน ไม้บรรทัด.com จะให้ความแม่นยำสูงระดับมิลลิเมตร ส่วนพื้นที่ขนาดใหญ่สามารถใช้กล้อง AR วัดได้"
+  },
+  {
+    question: "สามารถใช้กล้องมือถือเป็นไม้บรรทัดได้ไหม?",
+    answer: "สามารถใช้ได้ผ่านแอป Augmented Reality (AR) แต่สำหรับการวัดวัตถุขนาดเล็กที่ต้องการความแม่นยำระดับมิลลิเมตร เช่น น็อต สกรู หรือเครื่องประดับ การวางทาบวัดบน ไม้บรรทัดออนไลน์ ของ ไม้บรรทัด.com จะมีความแม่นยำและเที่ยงตรงกว่า"
+  },
+  {
+    question: "เราสามารถวัดขนาดออนไลน์ได้จริงไหม?",
+    answer: "วัดได้จริง เว็บไซต์ ไม้บรรทัด.com ใช้การคำนวณความหนาแน่นพิกเซลของหน้าจอ (PPI) เพื่อเรนเดอร์สเกล ไม้บรรทัดออนไลน์ ขนาดจริง บนหน้าจอของคุณ ทำให้ความยาว 1 ซม. หรือ 1 นิ้วบนหน้าจอตรงกับความเป็นจริง 100%"
+  },
+  {
+    question: "วิธีอ่านค่าไม้บรรทัดออนไลน์",
+    answer: "วิธีอ่านค่า: 1) ปรับเทียบหน้าจอบน ไม้บรรทัด.com, 2) เลือกหน่วย เซนติเมตร (ซม.), มิลลิเมตร (mm) หรือ นิ้ว, 3) วางวัตถุเริ่มที่ขีด 0, 4) อ่านค่าตัวเลขหลักและนับขีดย่อยที่ปลายวัตถุเพื่ออ่านค่าความยาวที่ถูกต้อง"
+  },
+  {
+    question: "วิธีเปิดไม้บรรทัดใน Word Online",
+    answer: "วิธีเปิดไม้บรรทัดใน Word Online (Microsoft Word บนเว็บ): ไปที่แท็บ 'มุมมอง' (View) บนแถบเครื่องมือด้านบน แล้วติ๊กถูกที่ช่อง 'ไม้บรรทัด' (Ruler) เพื่อแสดงไม้บรรทัดแนวนอนและแนวตั้ง"
+  },
+  {
+    question: "วิธีเพิ่มไม้บรรทัดใน Word Online",
+    answer: "ในการเพิ่มไม้บรรทัดใน Word Online: เปิดเอกสารของคุณในเบราว์เซอร์ ไปที่เมนู 'มุมมอง' (View) จากนั้นเปิดใช้งานปุ่มสลับ 'ไม้บรรทัด' (Ruler) เพื่อเปิดแถบวัดระยะขอบหน้ากระดาษ"
+  },
+  {
+    question: "วิธีแสดงไม้บรรทัดใน PowerPoint Online",
+    answer: "วิธีแสดงไม้บรรทัดใน PowerPoint Online: คลิกที่แท็บ 'มุมมอง' (View) จากนั้นติ๊กเลือก 'ไม้บรรทัด' (Ruler) ในส่วนแสดงผล คุณยังสามารถเปิดเส้นบอกแนว (Guides) และเส้นตาราง (Gridlines) เพื่อช่วยจัดตำแหน่งสไลด์ได้"
+  },
+  {
+    question: "วิธีใช้งานไม้บรรทัดออนไลน์",
+    answer: "วิธีใช้งาน ไม้บรรทัด ออนไลน์ ฟรี บน ไม้บรรทัด.com: 1) เปิดเว็บ ไม้บรรทัด.com, 2) ปรับเทียบขนาดหน้าจอผ่านปุ่ม 'ปรับเทียบจอ', 3) เลือกหน่วยวัดที่ต้องการ (ซม., mm, นิ้ว, px), 4) นำวัตถุมาทาบวัด หรือเปิดใช้เครื่องมือกล่องวัด 2D (กด S) และเป้าเล็ง (กด C)"
+  }
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqItems.map((item) => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer
+    }
+  }))
+};
+---
+
+<section id="seo-content" class="relative z-10 bg-[var(--color-canvas)] border-t border-[var(--color-hairline)] text-[var(--color-ink)] py-12 sm:py-16 px-3.5 sm:px-6 transition-colors duration-200">
+  <article class="max-w-4xl mx-auto space-y-12 sm:space-y-16">
+
+    <!-- Header Section (H1 + Intro) -->
+    <header class="space-y-4 text-center sm:text-left">
+      <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[var(--color-ink)] leading-tight">
+        ไม้บรรทัด.com — ไม้บรรทัดออนไลน์ ขนาดจริง ใช้งานฟรี
+      </h1>
+
+      <p class="text-[15px] sm:text-[16px] text-[var(--color-ink-muted)] leading-relaxed">
+        ยินดีต้อนรับสู่ <strong class="text-[var(--color-ink)] font-semibold">ไม้บรรทัด.com</strong> เว็บไซต์ให้บริการ <strong class="text-[#5e6ad2] font-semibold">ไม้บรรทัดออนไลน์ ขนาดจริง</strong> ระดับพรีเมียมที่มีความแม่นยำสูงตรงตามมาตรฐานสากล ออกแบบมาเพื่อให้คุณสามารถ <strong class="text-[var(--color-ink)] font-semibold">วัดไม้บรรทัดออนไลน์</strong> บนหน้าจอคอมพิวเตอร์ แท็บเล็ต และสมาร์ตโฟนได้ทันทีโดยไม่ต้องพกพาไม้บรรทัดจริง ไม่ว่าคุณจะต้องการวัดความยาวเป็น <strong class="text-[var(--color-ink)] font-semibold">ไม้บรรทัดออนไลน์ เซนติเมตร</strong> (<strong class="text-[#5e6ad2]">ไม้บรรทัดออนไลน์ ซม</strong>), <strong class="text-[var(--color-ink)] font-semibold">ไม้บรรทัดออนไลน์ มิลลิเมตร</strong> (<strong class="text-[#5e6ad2]">ไม้บรรทัดออนไลน์ mm</strong>), <strong class="text-[var(--color-ink)] font-semibold">ไม้บรรทัดออนไลน์ นิ้ว</strong> (in) หรือพิกเซล (px) คุณก็สามารถใช้งานเครื่องมือ <strong class="text-[var(--color-ink)] font-semibold">ไม้บรรทัด ออนไลน์ ฟรี</strong> นี้ได้ตลอด 24 ชั่วโมง
+      </p>
+    </header>
+
+    <!-- Key Feature Highlights (3 Cards) -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div class="p-5 sm:p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] hover:border-[#5e6ad2]/40 transition-all space-y-3">
+        <div class="w-10 h-10 rounded-xl bg-[#5e6ad2]/10 border border-[#5e6ad2]/30 flex items-center justify-center text-[#5e6ad2]">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 10h16M6 6l-4 4 4 4M14 6l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </div>
+        <h3 class="text-[16px] font-semibold text-[var(--color-ink)]">ไม้บรรทัดออนไลน์ ขนาดจริง แม่นยำ 100%</h3>
+        <p class="text-[13px] text-[var(--color-ink-subtle)] leading-relaxed">
+          <strong class="text-[var(--color-ink)]">ไม้บรรทัดออนไลน์ ขนาดจริง</strong> ผ่านการปรับเทียบค่าความหนาแน่นพิกเซล (PPI) ทำให้ 1 เซนติเมตรบนหน้าจอตรงกับ 1 เซนติเมตรในโลกจริงอย่างสมบูรณ์แบบ
+        </p>
+      </div>
+
+      <div class="p-5 sm:p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] hover:border-[#5e6ad2]/40 transition-all space-y-3">
+        <div class="w-10 h-10 rounded-xl bg-[#5e6ad2]/10 border border-[#5e6ad2]/30 flex items-center justify-center text-[#5e6ad2]">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 4h12M4 4v8M12 4v8M4 8h8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></path></svg>
+        </div>
+        <h3 class="text-[16px] font-semibold text-[var(--color-ink)]">เครื่องมือวัดไม้บรรทัดออนไลน์ครบวงจร</h3>
+        <p class="text-[13px] text-[var(--color-ink-subtle)] leading-relaxed">
+          ครบครันด้วยกล่องวัดวัตถุ 2D Sizer, เส้นไกด์วัดขนาด (Guidelines) และเป้าเล็ง Crosshair สำหรับงานวัดที่ต้องการความละเอียดสูง
+        </p>
+      </div>
+
+      <div class="p-5 sm:p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] hover:border-[#5e6ad2]/40 transition-all space-y-3 sm:col-span-2 md:col-span-1">
+        <div class="w-10 h-10 rounded-xl bg-[#5e6ad2]/10 border border-[#5e6ad2]/30 flex items-center justify-center text-[#5e6ad2]">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"></circle><path d="M10 6v4l2.5 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></path></svg>
+        </div>
+        <h3 class="text-[16px] font-semibold text-[var(--color-ink)]">ไม้บรรทัด ออนไลน์ ฟรี ทุกอุปกรณ์</h3>
+        <p class="text-[13px] text-[var(--color-ink-subtle)] leading-relaxed">
+          บริการ <strong class="text-[var(--color-ink)]">ไม้บรรทัด ออนไลน์ ฟรี</strong> เปิดใช้งานได้ทันทีบนเว็บเบราว์เซอร์ทุกระบบ รองรับทั้ง iPhone, Android, iPad, แท็บเล็ต, แล็ปท็อป และจอคอมพิวเตอร์
+        </p>
+      </div>
+    </section>
+
+    <!-- Main Content Section 1: Why Use ไม้บรรทัด.com -->
+    <section class="space-y-4">
+      <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-[var(--color-ink)]">
+        ทำไมต้องเลือกใช้ ไม้บรรทัดออนไลน์ บน ไม้บรรทัด.com?
+      </h2>
+      <div class="p-5 sm:p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] space-y-4 text-[14px] text-[var(--color-ink-muted)] leading-relaxed">
+        <p>
+          ในชีวิตประจำวัน บ่อยครั้งที่เราต้องการวัดความยาวของสิ่งของขนาดเล็ก เช่น ขนาดบัตร, เหรียญ, ความยาวของน็อต, สกรู, เครื่องประดับ, ความกว้างของสายนาฬิกา หรือเอกสารต่างๆ แต่กลับไม่มีไม้บรรทัดพลาสติกหรือตลับเมตรอยู่ใกล้ตัว การเปิดใช้งาน <strong class="text-[var(--color-ink)]">ไม้บรรทัดออนไลน์</strong> ผ่านเว็บเบราว์เซอร์จึงเป็นทางเลือกที่สะดวก รวดเร็ว และประหยัดเวลามากที่สุด
+        </p>
+        <p>
+          อย่างไรก็ตาม ปัญหาหลักของไม้บรรทัดบนเว็บไซต์ทั่วไปคือ <strong class="text-[var(--color-ink)]">"สเกลไม่ตรงกับขนาดจริง"</strong> เนื่องจากหน้าจอแต่ละรุ่น ไม่ว่าจะเป็น iPhone, Samsung Galaxy, iPad, MacBook หรือหน้าจอมอนิเตอร์คอมพิวเตอร์ตั้งโต๊ะ มีความหนาแน่นของพิกเซล (<strong class="text-[#5e6ad2]">PPI — Pixels Per Inch</strong>) และความละเอียดที่แตกต่างกัน หากไม่มีการปรับเทียบ (Calibration) สเกลไม้บรรทัดที่แสดงบนหน้าจออาจคลาดเคลื่อนไปจากความเป็นจริงถึง 20% - 40%
+        </p>
+        <p>
+          เว็บไซต์ <strong class="text-[#5e6ad2] font-semibold">ไม้บรรทัด.com</strong> ถูกพัฒนาขึ้นมาด้วยอัลกอริทึมการคำนวณ HiDPI พิเศษ เพื่อแก้ปัญหานี้โดยเฉพาะ ทำให้คุณได้ <strong class="text-[var(--color-ink)]">ไม้บรรทัดออนไลน์ ขนาดจริง</strong> ที่มีความแม่นยำ 100% สามารถนำวัตถุจริงมาทาบบนหน้าจอเพื่ออ่านค่าได้อย่างมั่นใจทันที
+        </p>
+      </div>
+    </section>
+
+    <!-- Main Content Section 2: Supported Units (cm, mm, in, px) -->
+    <section class="space-y-4">
+      <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-[var(--color-ink)]">
+        รองรับทุกหน่วยวัด: ไม้บรรทัดออนไลน์ เซนติเมตร, มิลลิเมตร, นิ้ว และพิกเซล
+      </h2>
+      <div class="p-5 sm:p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] space-y-4 text-[14px] text-[var(--color-ink-muted)] leading-relaxed">
+        <p>
+          <strong class="text-[var(--color-ink)]">ไม้บรรทัด.com</strong> ออกแบบมาเพื่อรองรับการใช้งานที่หลากหลาย ครอบคลุมหน่วยวัดความยาวมาตรฐานที่ใช้ในชีวิตประจำวันและงานออกแบบ:
+        </p>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
+          <div class="p-4 rounded-xl bg-[var(--color-surface-2)] border border-[var(--color-hairline)] space-y-1.5">
+            <h3 class="font-semibold text-[14px] text-[var(--color-ink)]">ไม้บรรทัดออนไลน์ เซนติเมตร (ไม้บรรทัดออนไลน์ ซม.)</h3>
+            <p class="text-[12px] text-[var(--color-ink-subtle)] leading-relaxed">
+              หน่วยเมตริกมาตรฐาน เหมาะสำหรับวัดความยาวสิ่งของทั่วไป เส้นสเกลหลักแสดงตัวเลขทุก 1 ซม. ชัดเจนด้วยขีดสีแดงเด่นชัด
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[var(--color-surface-2)] border border-[var(--color-hairline)] space-y-1.5">
+            <h3 class="font-semibold text-[14px] text-[var(--color-ink)]">ไม้บรรทัดออนไลน์ มิลลิเมตร (ไม้บรรทัดออนไลน์ mm)</h3>
+            <p class="text-[12px] text-[var(--color-ink-subtle)] leading-relaxed">
+              สำหรับงานละเอียดที่ต้องการความแม่นยำสูง มีขีดย่อยแบ่งทุก 1 มม. และขีดกึ่งกลาง 5 มม. เหมาะสำหรับงานช่าง งานฝีมือ และการวัดขนาดชิ้นส่วนอิเล็กทรอนิกส์
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[var(--color-surface-2)] border border-[var(--color-hairline)] space-y-1.5">
+            <h3 class="font-semibold text-[14px] text-[var(--color-ink)]">ไม้บรรทัดออนไลน์ นิ้ว (Inches)</h3>
+            <p class="text-[12px] text-[var(--color-ink-subtle)] leading-relaxed">
+              หน่วยระบบอิมพีเรียลมาตรฐาน พร้อมแสดงสเกลย่อย 1/2", 1/4", 1/8", 1/16" และ 1/32" นิ้วอย่างละเอียด เหมาะสำหรับงานไม้ งานผ้า และมาตรฐานสากล
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[var(--color-surface-2)] border border-[var(--color-hairline)] space-y-1.5">
+            <h3 class="font-semibold text-[14px] text-[var(--color-ink)]">สเกลพิกเซลหน้าจอ (Screen Pixels — px)</h3>
+            <p class="text-[12px] text-[var(--color-ink-subtle)] leading-relaxed">
+              เครื่องมือสำหรับ UI/UX ดีไซเนอร์และเว็บมาสเตอร์ ช่วยวัดขนาดองค์ประกอบบนหน้าจอคอมพิวเตอร์และมือถือเป็นพิกเซลจริง
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content Section 3: 3 Easy Calibration Methods -->
+    <section class="space-y-4">
+      <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-[var(--color-ink)]">
+        วิธีปรับเทียบหน้าจอให้ได้ ไม้บรรทัดออนไลน์ ขนาดจริง
+      </h2>
+      <div class="p-5 sm:p-6 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] space-y-4 text-[14px] text-[var(--color-ink-muted)] leading-relaxed">
+        <p>
+          เพื่อให้มั่นใจว่าคุณกำลังใช้งาน <strong class="text-[var(--color-ink)]">ไม้บรรทัดออนไลน์ ขนาดจริง</strong> 100% ระบบของเรามี 3 วิธีการปรับเทียบหน้าจอที่ง่ายและรวดเร็ว:
+        </p>
+
+        <ol class="space-y-3 list-decimal list-inside text-[13px] sm:text-[14px]">
+          <li class="leading-relaxed">
+            <strong class="text-[var(--color-ink)]">ตรวจจับอัตโนมัติ (Auto-Detect):</strong> ระบบจะอ่านค่าความละเอียดและอัตราส่วนพิกเซล (DPR) ของอุปกรณ์คุณ และจับคู่กับฐานข้อมูลอุปกรณ์มาตรฐานสากลทันที
+          </li>
+          <li class="leading-relaxed">
+            <strong class="text-[var(--color-ink)]">ทาบบัตรประชาชนหรือบัตรเครดิต (Credit Card Calibration):</strong> บัตรเครดิต บัตรเดบิต หรือบัตรประชาชนทั่วโลก มีขนาดมาตรฐานสากล ISO/IEC 7810 ID-1 กว้าง 85.60 มม. เพียงนำบัตรมาทาบกับกรอบบนหน้าจอแล้วเลื่อนแถบ Slider ให้พอดี จะได้ความแม่นยำระดับซับมิลลิเมตร
+          </li>
+          <li class="leading-relaxed">
+            <strong class="text-[var(--color-ink)]">ระบุขนาดหน้าจอแนวทแยง (Screen Diagonal):</strong> หากคุณทราบขนาดหน้าจอของคุณ เช่น 14 นิ้ว, 15.6 นิ้ว หรือ 27 นิ้ว เพียงกรอกตัวเลข ระบบจะคำนวณค่า PPI ที่แม่นยำให้โดยอัตโนมัติ
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Reference Table: Common Devices & PPI -->
+    <section class="space-y-4">
+      <h3 class="text-[17px] sm:text-[18px] font-bold text-[var(--color-ink)]">
+        ตารางอ้างอิงค่าความหนาแน่นพิกเซล (PPI) ของอุปกรณ์ยอดนิยม
+      </h3>
+      <div class="overflow-x-auto rounded-2xl border border-[var(--color-hairline)]">
+        <table class="w-full text-[12px] sm:text-[13px] text-left min-w-[500px]">
+          <thead class="bg-[var(--color-surface-2)] text-[var(--color-ink-subtle)] font-mono text-[11px] uppercase border-b border-[var(--color-hairline)]">
+            <tr>
+              <th class="px-4 py-3">รุ่นอุปกรณ์ / จอภาพ</th>
+              <th class="px-4 py-3">ขนาดแนวทแยง</th>
+              <th class="px-4 py-3">ความละเอียด</th>
+              <th class="px-4 py-3">ค่า CSS PPI</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[var(--color-hairline)] bg-[var(--color-surface-1)] font-mono text-[var(--color-ink-muted)]">
+            <tr class="hover:bg-[var(--color-surface-2)]/50 transition-colors">
+              <td class="px-4 py-2.5 text-[var(--color-ink)] font-sans font-medium">MacBook Pro 14" (Liquid Retina XDR)</td>
+              <td class="px-4 py-2.5">14.2 นิ้ว</td>
+              <td class="px-4 py-2.5">3024×1964 @ 2x</td>
+              <td class="px-4 py-2.5 text-[#5e6ad2] font-semibold">127.0 PPI</td>
+            </tr>
+            <tr class="hover:bg-[var(--color-surface-2)]/50 transition-colors">
+              <td class="px-4 py-2.5 text-[var(--color-ink)] font-sans font-medium">MacBook Air 13.6" (M2/M3)</td>
+              <td class="px-4 py-2.5">13.6 นิ้ว</td>
+              <td class="px-4 py-2.5">2560×1664 @ 2x</td>
+              <td class="px-4 py-2.5 text-[#5e6ad2] font-semibold">113.8 PPI</td>
+            </tr>
+            <tr class="hover:bg-[var(--color-surface-2)]/50 transition-colors">
+              <td class="px-4 py-2.5 text-[var(--color-ink)] font-sans font-medium">แล็ปท็อปทั่วไป 15.6" (Full HD 1080p)</td>
+              <td class="px-4 py-2.5">15.6 นิ้ว</td>
+              <td class="px-4 py-2.5">1920×1080 @ 1x</td>
+              <td class="px-4 py-2.5 text-[#5e6ad2] font-semibold">141.2 PPI</td>
+            </tr>
+            <tr class="hover:bg-[var(--color-surface-2)]/50 transition-colors">
+              <td class="px-4 py-2.5 text-[var(--color-ink)] font-sans font-medium">จอมอนิเตอร์ตั้งโต๊ะ 24.0" (FHD 1080p)</td>
+              <td class="px-4 py-2.5">23.8 นิ้ว</td>
+              <td class="px-4 py-2.5">1920×1080 @ 1x</td>
+              <td class="px-4 py-2.5 text-[#5e6ad2] font-semibold">92.6 PPI</td>
+            </tr>
+            <tr class="hover:bg-[var(--color-surface-2)]/50 transition-colors">
+              <td class="px-4 py-2.5 text-[var(--color-ink)] font-sans font-medium">จอมอนิเตอร์ตั้งโต๊ะ 27.0" (2K QHD 1440p)</td>
+              <td class="px-4 py-2.5">27.0 นิ้ว</td>
+              <td class="px-4 py-2.5">2560×1440 @ 1x</td>
+              <td class="px-4 py-2.5 text-[#5e6ad2] font-semibold">108.8 PPI</td>
+            </tr>
+            <tr class="hover:bg-[var(--color-surface-2)]/50 transition-colors">
+              <td class="px-4 py-2.5 text-[var(--color-ink)] font-sans font-medium">iPhone 16 / 15 / 14 (OLED Super Retina)</td>
+              <td class="px-4 py-2.5">6.1 นิ้ว</td>
+              <td class="px-4 py-2.5">2556×1179 @ 3x</td>
+              <td class="px-4 py-2.5 text-[#5e6ad2] font-semibold">153.3 PPI</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- FAQ Accordion Section (100% Thai SEO Friendly) -->
+    <section id="faq" class="space-y-4">
+      <div class="space-y-1">
+        <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-[var(--color-ink)]">
+          คำถามที่พบบ่อยเกี่ยวกับไม้บรรทัดออนไลน์ (FAQ)
+        </h2>
+        <p class="text-[13px] text-[var(--color-ink-subtle)]">
+          รวมทุกคำตอบเกี่ยวกับการใช้งานไม้บรรทัดออนไลน์ การวัดขนาดบนโทรศัพท์มือถือ และการวัดเซนติเมตรออนไลน์
+        </p>
+      </div>
+
+      <div class="space-y-2.5">
+        {faqItems.map((item) => (
+          <details class="group p-4 rounded-2xl bg-[var(--color-surface-1)] border border-[var(--color-hairline)] open:border-[var(--color-hairline-strong)] transition-all">
+            <summary class="flex items-center justify-between font-semibold text-[14px] sm:text-[15px] text-[var(--color-ink)] cursor-pointer list-none">
+              <span>{item.question}</span>
+              <span class="text-[var(--color-ink-subtle)] group-open:rotate-180 transition-transform ml-2 shrink-0">▼</span>
+            </summary>
+            <p class="mt-3 text-[13px] text-[var(--color-ink-muted)] leading-relaxed">
+              {item.answer}
+            </p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- JSON-LD FAQPage Schema for Search Engines -->
+    <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+
+    <!-- Footer -->
+    <footer class="pt-8 sm:pt-12 border-t border-[var(--color-hairline)] flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-[11px] sm:text-[12px] text-[var(--color-ink-subtle)] text-center sm:text-left">
+      <div class="flex items-center gap-2">
+        <span class="font-semibold text-[var(--color-ink)]">ไม้บรรทัด.com</span>
+        <span>•</span>
+        <span>© 2026 ไม้บรรทัดออนไลน์ ขนาดจริง สงวนลิขสิทธิ์ทั้งหมด</span>
+      </div>
+      <nav class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+        <a href="/about" class="hover:text-[var(--color-ink)] transition-colors">เกี่ยวกับเรา</a>
+        <a href="/privacy-policy" class="hover:text-[var(--color-ink)] transition-colors">นโยบายความเป็นส่วนตัว</a>
+        <a href="/terms" class="hover:text-[var(--color-ink)] transition-colors">ข้อกำหนดการใช้งาน</a>
+        <a href="/contact" class="hover:text-[var(--color-ink)] transition-colors">ติดต่อเรา</a>
+      </nav>
+    </footer>
+
+  </article>
+</section>
